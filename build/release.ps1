@@ -54,20 +54,20 @@ if (git status --porcelain) { echo "Not clean" }
 ###########################################################################
 
 standard-version release --skip.commit --skip.tag
-# $NEXT_VERSION = (Select-String -Pattern [0-9]+\.[0-9]+\.[0-9]+ -Path $CHANGELOG_PATH | Select-Object -First 1).Matches.Value
-# $NEXT_VERSION_TAG = "v" + "$NEXT_VERSION"
-# $RELEASE_DATE = (Select-String -Pattern "\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])" -Path $CHANGELOG_PATH | Select-Object -First 1).Matches.Value
-# $RELEASE_NOTE_LINK = $NEXT_VERSION.Replace(".", "") + "-" + "$RELEASE_DATE"
+$NEXT_VERSION = (Select-String -Pattern [0-9]+\.[0-9]+\.[0-9]+ -Path $CHANGELOG_PATH | Select-Object -First 1).Matches.Value
+$NEXT_VERSION_TAG = "v" + "$NEXT_VERSION"
+$RELEASE_DATE = (Select-String -Pattern "\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])" -Path $CHANGELOG_PATH | Select-Object -First 1).Matches.Value
+$RELEASE_NOTE_LINK = $NEXT_VERSION.Replace(".", "") + "-" + "$RELEASE_DATE"
 
 ###########################################################################
 # Bump version files
 ###########################################################################
 
-# (Get-Content $NET_CORE_CSPROJ_PATH) -replace '(?<=<Version>).*(?=</Version>)', $NEXT_VERSION | Set-Content $NET_CORE_CSPROJ_PATH
-# (Get-Content $NET_CORE_CSPROJ_PATH) -replace '(?<=CHANGELOG\.md#).*(?=</PackageReleaseNotes>)', $RELEASE_NOTE_LINK | Set-Content $NET_CORE_CSPROJ_PATH
-# (Get-Content $NET_CORE_CSPROJ_PATH) -replace '(?<=<version>).*(?=</version>)', $NEXT_VERSION | Set-Content $NET_CORE_CSPROJ_PATH
-# (Get-Content $NET_FRAMEWORK_NUSPEC_PATH) -replace '(?<=CHANGELOG\.md#).*(?=</releaseNotes>)', $RELEASE_NOTE_LINK | Set-Content $NET_FRAMEWORK_NUSPEC_PATH
-# (Get-Content $ASSEMBLYINFO_PATH) -replace '(?<=NuGetVersion = ").*(?=";)', $NEXT_VERSION | Set-Content $ASSEMBLYINFO_PATH
+(Get-Content $NET_CORE_CSPROJ_PATH) -replace '(?<=<Version>).*(?=</Version>)', $NEXT_VERSION | Set-Content $NET_CORE_CSPROJ_PATH
+(Get-Content $NET_CORE_CSPROJ_PATH) -replace '(?<=CHANGELOG\.md#).*(?=</PackageReleaseNotes>)', $RELEASE_NOTE_LINK | Set-Content $NET_CORE_CSPROJ_PATH
+(Get-Content $NET_FRAMEWORK_NUSPEC_PATH) -replace '(?<=<version>).*(?=</version>)', $NEXT_VERSION | Set-Content $NET_FRAMEWORK_NUSPEC_PATH
+(Get-Content $NET_FRAMEWORK_NUSPEC_PATH) -replace '(?<=CHANGELOG\.md#).*(?=</releaseNotes>)', $RELEASE_NOTE_LINK | Set-Content $NET_FRAMEWORK_NUSPEC_PATH
+(Get-Content $ASSEMBLYINFO_PATH) -replace '(?<=NuGetVersion = ").*(?=";)', $NEXT_VERSION | Set-Content $ASSEMBLYINFO_PATH
 
 ###########################################################################
 # Commit and push version bump
