@@ -62,7 +62,6 @@ if($DryRun){
     git branch -D $NEXT_VERSION_TAG
     git checkout -b $NEXT_VERSION_TAG
     git commit -am $NEXT_VERSION_TAG
-    #git push --atomic origin HEAD $NEXT_VERSION_TAG
     git push --set-upstream origin $NEXT_VERSION_TAG
 
     $password = ConvertTo-SecureString "$GithubToken" -AsPlainText -Force
