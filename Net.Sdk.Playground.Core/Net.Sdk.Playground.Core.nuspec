@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Net.Sdk.Playground.Core</id>
+    <version>1.0.0</version>
+    <title>.NET SDK Playground Core</title>
+    <authors>mwoda</authors>
+    <owners>mwoda</owners>
+    <projectUrl>https://github.com/mwwoda/net-sdk-playground</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>.NET SDK Playground Core for testing purposes. The library is built for .NET Core.</description>
+    <releaseNotes>New stuff.</releaseNotes>
+    <copyright>Copyright 2021</copyright>
+    <tags>.NET SDK Core</tags>
+  </metadata>
+</package>

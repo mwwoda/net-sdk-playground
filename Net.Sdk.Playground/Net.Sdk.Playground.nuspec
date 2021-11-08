@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Net.Sdk.Playground</id>
+    <version>1.0.0</version>
+    <title>.NET SDK Playground</title>
+    <authors>mwoda</authors>
+    <owners>mwoda</owners>
+    <projectUrl>https://github.com/mwwoda/net-sdk-playground</projectUrl>
+    <license type="expression">Apache-2.0</license>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>.NET SDK Playground for testing purposes. The library is targeting .NET Framework 4.5</description>
+    <releaseNotes>See https://github.com/mwwoda/net-sdk-playground/blob/main/CHANGELOG.md#400-2021-11-02</releaseNotes>
+    <copyright>Copyright 2021</copyright>
+    <tags>.NET SDK</tags>
+  </metadata>
+</package>

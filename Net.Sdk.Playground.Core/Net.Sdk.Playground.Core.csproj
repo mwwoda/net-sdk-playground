@@ -1,0 +1,48 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>.NET SDK Playground for .NET Core</Description>
+    <AssemblyTitle>Net.Sdk.Playground.Core</AssemblyTitle>
+    <Version>1.0.0</Version>
+    <Authors>mwoda</Authors>
+	<Owners>mwoda</Owners>
+	<PackageProjectUrl>https://github.com/mwwoda/net-sdk-playground</PackageProjectUrl>
+  <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+	<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+	<PackageDescription>.NET SDK Playground for testing purposes. The library is built for .NET Core.</PackageDescription>
+	<PackageReleaseNotes>See https://github.com/mwwoda/net-sdk-playground/blob/main/CHANGELOG.md#400-2021-11-02</PackageReleaseNotes>
+	<Copyright>Copyright 2021</Copyright>
+	<PackageTags>.NET;SDK;Core</PackageTags>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>Net.Sdk.Playground.Core</AssemblyName>
+    <PackageId>Net.Sdk.Playground.Core</PackageId>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>TRACE;DEBUG;NETSTANDARD2_0</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\Net.Sdk.Playground\**\*.cs" Exclude="bin\**;obj\**;**\*.xproj;packages\**;..\Net.Sdk.Playground\Properties\AssemblyInfo.cs;..\Net.Sdk.Playground\obj\**" />
+  </ItemGroup>
+
+    <ItemGroup>
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Portable.BouncyCastle" Version="1.8.10" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.13.1" />
+    <PackageReference Include="System.Security.Cryptography.Algorithms" Version="4.3.1" />
+  </ItemGroup>
+
+  <Target Name="PostcompileScript" AfterTargets="Build">
+    <Exec Command="dotnet pack --no-build --configuration $(Configuration)" />
+  </Target>
+
+</Project>
