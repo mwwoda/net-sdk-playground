@@ -74,6 +74,7 @@ $RELEASE_NOTE_LINK = $NEXT_VERSION.Replace(".", "") + "-" + "$RELEASE_DATE"
 if($DryRun){
     Write-Output "Running in dry run. Commit will not be made"
 }else{
+    #git branch -D $NEXT_VERSION_TAG
     git checkout -b $NEXT_VERSION_TAG
     git commit -am $NEXT_VERSION_TAG
     git push --atomic origin HEAD $NEXT_VERSION_TAG
@@ -87,7 +88,7 @@ if($DryRun){
         OwnerName = $REPO_OWNER
         RepositoryName = $REPO_NAME
         Title = "chore: " + $NEXT_VERSION_TAG 
-        Head = $BRANCH_NAME
+        Head = $NEXT_VERSION_TAG
         Base = 'main'
         Body = "Bumping version files for the next release! " + $NEXT_VERSION_TAG
         MaintainerCanModify = $true
