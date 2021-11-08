@@ -30,7 +30,7 @@ $NUGET_URL="https://api.nuget.org/v3/index.json"
 # Ensure git tree is clean
 ###########################################################################
 
-if (git status --porcelain) { echo exit 0 }
+if (git status --porcelain) { exit 0 }
 
 ###########################################################################
 # Update changelog
@@ -59,7 +59,7 @@ $RELEASE_NOTE_LINK = $NEXT_VERSION.Replace(".", "") + "-" + "$RELEASE_DATE"
 if($DryRun){
     Write-Output "Running in dry run. Commit will not be made"
 }else{
-    #git branch -D $NEXT_VERSION_TAG
+    git branch -D $NEXT_VERSION_TAG
     git checkout -b $NEXT_VERSION_TAG
     git commit -am $NEXT_VERSION_TAG
     #git push --atomic origin HEAD $NEXT_VERSION_TAG
