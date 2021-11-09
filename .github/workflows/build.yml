@@ -9,8 +9,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.1
       - name: Build
         run: msbuild ./Net.Sdk.Playground /property:Configuration=Release
+      - name: Test
+        run: dotnet test -f net45 --verbosity normal
 
   build-core:
     runs-on: windows-latest
@@ -18,23 +22,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.1
       - name: Install dependencies
         run: dotnet restore
       - name: Build
         run: dotnet build ./Net.Sdk.Playground.Core --configuration Release --no-restore
-
-  test-framework:
-    needs: build-framework
-    runs-on: windows-latest
-
-    steps:
-      - name: Test .NET Framework
-        run: dotnet test -f net45 --verbosity normal
-
-  test-core:
-    needs: build-core
-    runs-on: windows-latest
-
-    steps:
-      - name: Test .NET Core
-        run: dotnet test -f netcoreapp2.0 --verbosity normal
+      - name: Test
+        run: dotnet test -f netcoreapp2.0 --no-restore --verbosity normal
