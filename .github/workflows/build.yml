@@ -14,7 +14,7 @@ jobs:
       - name: Download PfxTool
         run: Invoke-WebRequest https://github.com/honzajscz/SnInstallPfx/releases/download/0.1.2-beta/SnInstallPfx.exe -OutFile SnInstallPfx.exe
       - name: Install Pfx in container
-        run: SnInstallPfx.exe ./Net.Sdk.Playground/PlaygroundSDKKey.pfx fess
+        run: \.SnInstallPfx.exe ./Net.Sdk.Playground/PlaygroundSDKKey.pfx fess
       - name: Build
         run: msbuild ./Net.Sdk.Playground /property:Configuration=Release
       - name: Test
