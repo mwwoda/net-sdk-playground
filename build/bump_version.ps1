@@ -8,7 +8,10 @@ Param
     [string]$GithubToken,
 
     [Alias('b')]
-    [string]$Branch="main"
+    [string]$Branch="main",
+
+    [Alias('id')]
+    [bool]$InstallDependencies = $true
 )
 
 $ErrorActionPreference = "Stop"
@@ -23,6 +26,15 @@ $ASSEMBLYINFO_PATH="$FRAMEWORK_PROJ_DIR" + "\Utility\AssemblyInfo.cs"
 $FRAMEWORK_NUSPEC_PATH="$FRAMEWORK_PROJ_DIR" + "\Net.Sdk.Playground.nuspec"
 $REPO_OWNER="mwwoda"
 $REPO_NAME="net-sdk-playground"
+
+###########################################################################
+# Install dependencies
+###########################################################################
+
+if ($InstallDependencies){
+    npm install -g standard-version
+    Install-Module -Name PowerShellForGitHub
+}
 
 ###########################################################################
 # Ensure git tree is clean

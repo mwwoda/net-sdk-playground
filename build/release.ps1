@@ -12,7 +12,10 @@ Param
     [string]$NextVersion,
 
     [Alias('rs')]
-    [string]$ReleaseNotes="Release notes"
+    [string]$ReleaseNotes="Release notes",
+
+    [Alias('id')]
+    [bool]$InstallDependencies = $true
 )
 
 $ErrorActionPreference = "Stop"
@@ -27,6 +30,14 @@ $FRAMEWORK_NUPKG_PATH=$FRAMEWORK_PROJ_DIR + "\Net.Sdk.Playground." + $NextVersio
 $FRAMEWORK_PDB_PATH=$FRAMEWORK_PROJ_DIR + "\bin\Release\Net.Sdk.Playground.pdb"
 $CORE_NUPKG_PATH=$CORE_PROJ_DIR + "\bin\Release\Net.Sdk.Playground.Core." + $NextVersion + ".nupkg"
 $CORE_PDB_PATH=$CORE_PROJ_DIR + "\bin\Release\netstandard2.0\Net.Sdk.Playground.Core.pdb"
+
+###########################################################################
+# Install dependencies
+###########################################################################
+
+if ($InstallDependencies){
+    Install-Module -Name PowerShellForGitHub
+}
 
 ###########################################################################
 # Create git release

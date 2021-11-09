@@ -21,7 +21,10 @@ Param
     [string]$PfxPassword,
 
     [Alias('bt')]
-    [bool]$BuildAndTest =  $true
+    [bool]$BuildAndTest =  $true,
+
+    [Alias('id')]
+    [bool]$InstallDependencies = $true
 )
 
 $ErrorActionPreference = "Stop"
@@ -47,7 +50,9 @@ if ($LASTEXITCODE -ne 0) {
 # Install dependencies
 ###########################################################################
 
-Invoke-WebRequest https://github.com/honzajscz/SnInstallPfx/releases/download/0.1.2-beta/SnInstallPfx.exe -SkipCertificateCheck -OutFile SnInstallPfx.exe
+if ($InstallDependencies){
+    Invoke-WebRequest https://github.com/honzajscz/SnInstallPfx/releases/download/0.1.2-beta/SnInstallPfx.exe -SkipCertificateCheck -OutFile SnInstallPfx.exe
+}
 
 ###########################################################################
 # Setup Pfx
@@ -55,7 +60,7 @@ Invoke-WebRequest https://github.com/honzajscz/SnInstallPfx/releases/download/0.
 
 $Bytes = [Convert]::FromBase64String($PfxAsBase64)
 $PfxPath = "$FRAMEWORK_PROJ_DIR" + "\AssemblySigningKey.pfx"
-[IO.File]::WriteAllBytes($pfxPath, $Bytes)
+[IO.File]::WriteAllBytes($PfxPath, $Bytes)
 .\SnInstallPfx.exe $PfxPath $PfxPassword
 Remove-Item $PfxPath 
 
