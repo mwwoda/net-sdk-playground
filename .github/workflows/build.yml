@@ -1,9 +1,9 @@
-name: dotnet package
+name: Build and Test
 
 on: [pull_request]
 
 jobs:
-  build-framework:
+  framework:
     runs-on: windows-latest
 
     steps:
@@ -11,12 +11,16 @@ jobs:
         uses: actions/checkout@v2
       - name: Add msbuild to PATH
         uses: microsoft/setup-msbuild@v1.1
+      - name: Download PfxTool
+        uses: Invoke-WebRequest https://github.com/honzajscz/SnInstallPfx/releases/download/0.1.2-beta/SnInstallPfx.exe -OutFile SnInstallPfx.exe
+      - name: Install Pfx in container
+        uses: SnInstallPfx.exe ./Net.Sdk.Playground/PlaygroundSDKKey.pfx fess
       - name: Build
         run: msbuild ./Net.Sdk.Playground /property:Configuration=Release
       - name: Test
         run: dotnet test -f net45 --verbosity normal
 
-  build-core:
+  core:
     runs-on: windows-latest
 
     steps:
