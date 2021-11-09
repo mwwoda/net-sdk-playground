@@ -12,9 +12,9 @@ jobs:
       - name: Add msbuild to PATH
         uses: microsoft/setup-msbuild@v1.1
       - name: Download PfxTool
-        uses: Invoke-WebRequest https://github.com/honzajscz/SnInstallPfx/releases/download/0.1.2-beta/SnInstallPfx.exe -OutFile SnInstallPfx.exe
+        run: Invoke-WebRequest https://github.com/honzajscz/SnInstallPfx/releases/download/0.1.2-beta/SnInstallPfx.exe -OutFile SnInstallPfx.exe
       - name: Install Pfx in container
-        uses: SnInstallPfx.exe ./Net.Sdk.Playground/PlaygroundSDKKey.pfx fess
+        run: SnInstallPfx.exe ./Net.Sdk.Playground/PlaygroundSDKKey.pfx fess
       - name: Build
         run: msbuild ./Net.Sdk.Playground /property:Configuration=Release
       - name: Test
