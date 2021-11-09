@@ -1,36 +1,37 @@
 Param
 (
-    #[Parameter(Mandatory)]
     [Alias('dr')]
     [bool]$DryRun = $true,
 
-    #[Parameter(Mandatory)]
+    [Parameter(Mandatory)]
     [Alias('gh')]
-    [string]$GithubToken
+    [string]$GithubToken,
+
+    [Alias('b')]
+    [string]$Branch="main"
 )
 
 $ErrorActionPreference = "Stop"
+
 $ROOT_DIR=$pwd
+$GIT_SCRIPT="$PSScriptRoot" + "\ensure_git_clean.ps1"
 $CHANGELOG_PATH="$ROOT_DIR" + "\CHANGELOG.md"
-$SLN_PATH="$ROOT_DIR" + "\Net.Sdk.Playground.sln"
 $FRAMEWORK_PROJ_DIR="$ROOT_DIR" + "\Net.Sdk.Playground"
 $CORE_PROJ_DIR="$ROOT_DIR" + "\Net.Sdk.Playground.Core"
-$TEST_PROJ_DIR="$ROOT_DIR" + "\Net.Sdk.Playground.Test"
-$NET_CORE_VER="netcoreapp2.0"
-$NET_FRAMEWORK_VER="net45"
-$FRAMEWORK_DLL_PATH="$ROOT_DIR" + "\Net.Sdk.Playground\bin\Release\Net.Sdk.Playground.dll"
-$NET_CORE_CSPROJ_PATH="$CORE_PROJ_DIR" + "\Net.Sdk.Playground.Core.csproj"
+$CORE_CSPROJ_PATH="$CORE_PROJ_DIR" + "\Net.Sdk.Playground.Core.csproj"
 $ASSEMBLYINFO_PATH="$FRAMEWORK_PROJ_DIR" + "\Utility\AssemblyInfo.cs"
-$NET_FRAMEWORK_NUSPEC_PATH="$FRAMEWORK_PROJ_DIR" + "\Net.Sdk.Playground.nuspec"
+$FRAMEWORK_NUSPEC_PATH="$FRAMEWORK_PROJ_DIR" + "\Net.Sdk.Playground.nuspec"
 $REPO_OWNER="mwwoda"
 $REPO_NAME="net-sdk-playground"
-$NUGET_URL="https://api.nuget.org/v3/index.json"
 
 ###########################################################################
 # Ensure git tree is clean
 ###########################################################################
 
-if (git status --porcelain) { exit 0 }
+Invoke-Expression "& `"$GIT_SCRIPT`" -b $Branch"
+if ($LASTEXITCODE -ne 0) {
+    exit 1
+}
 
 ###########################################################################
 # Update changelog
@@ -46,18 +47,18 @@ $RELEASE_NOTE_LINK = $NEXT_VERSION.Replace(".", "") + "-" + "$RELEASE_DATE"
 # Bump version files
 ###########################################################################
 
-(Get-Content $NET_CORE_CSPROJ_PATH) -replace '(?<=<Version>).*(?=</Version>)', $NEXT_VERSION | Set-Content $NET_CORE_CSPROJ_PATH
-(Get-Content $NET_CORE_CSPROJ_PATH) -replace '(?<=CHANGELOG\.md#).*(?=</PackageReleaseNotes>)', $RELEASE_NOTE_LINK | Set-Content $NET_CORE_CSPROJ_PATH
-(Get-Content $NET_FRAMEWORK_NUSPEC_PATH) -replace '(?<=<version>).*(?=</version>)', $NEXT_VERSION | Set-Content $NET_FRAMEWORK_NUSPEC_PATH
-(Get-Content $NET_FRAMEWORK_NUSPEC_PATH) -replace '(?<=CHANGELOG\.md#).*(?=</releaseNotes>)', $RELEASE_NOTE_LINK | Set-Content $NET_FRAMEWORK_NUSPEC_PATH
+(Get-Content $CORE_CSPROJ_PATH) -replace '(?<=<Version>).*(?=</Version>)', $NEXT_VERSION | Set-Content $CORE_CSPROJ_PATH
+(Get-Content $CORE_CSPROJ_PATH) -replace '(?<=CHANGELOG\.md#).*(?=</PackageReleaseNotes>)', $RELEASE_NOTE_LINK | Set-Content $CORE_CSPROJ_PATH
+(Get-Content $FRAMEWORK_NUSPEC_PATH) -replace '(?<=<version>).*(?=</version>)', $NEXT_VERSION | Set-Content $FRAMEWORK_NUSPEC_PATH
+(Get-Content $FRAMEWORK_NUSPEC_PATH) -replace '(?<=CHANGELOG\.md#).*(?=</releaseNotes>)', $RELEASE_NOTE_LINK | Set-Content $FRAMEWORK_NUSPEC_PATH
 (Get-Content $ASSEMBLYINFO_PATH) -replace '(?<=NuGetVersion = ").*(?=";)', $NEXT_VERSION | Set-Content $ASSEMBLYINFO_PATH
 
 ###########################################################################
-# Commit and push version bump
+# Create PR with version bump
 ###########################################################################
 
 if($DryRun){
-    Write-Output "Running in dry run. Commit will not be made"
+    Write-Output "Dry run. PR with version bump will not be created."
 }else{
     git branch -D $NEXT_VERSION_TAG
     git checkout -b $NEXT_VERSION_TAG
@@ -77,7 +78,9 @@ if($DryRun){
         Body = "Bumping version files for the next release! " + $NEXT_VERSION_TAG
         MaintainerCanModify = $true
     }
-    $pr = New-GitHubPullRequest @prParams
+    New-GitHubPullRequest @prParams
 
     Clear-GitHubAuthentication
 }
+
+exit 0

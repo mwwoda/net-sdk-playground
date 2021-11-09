@@ -1,47 +1,55 @@
 Param
 (
-    #[Parameter(Mandatory)]
     [Alias('dr')]
     [bool]$DryRun = $true,
 
-    #[Parameter(Mandatory)]
-    [Alias('gh')]
-    [string]$GithubToken,
-
-    #[Parameter(Mandatory)]
+    [Parameter(Mandatory)]
     [Alias('ng')]
     [string]$NugetKey,
 
-    #[Parameter(Mandatory)]
+    [Parameter(Mandatory)]
     [Alias('nv')]
-    [string]$NextVersion
+    [string]$NextVersion,
+
+    [Alias('b')]
+    [string]$Branch="main",
+
+    [Alias('bt')]
+    [bool]$BuildAndTest =  $true
 )
 
 $ErrorActionPreference = "Stop"
-#.\build\release.ps1
+
 $ROOT_DIR=$pwd
-$CHANGELOG_PATH="$ROOT_DIR" + "\CHANGELOG.md"
-$SLN_PATH="$ROOT_DIR" + "\Net.Sdk.Playground.sln"
-$FRAMEWORK_PROJ_DIR="$ROOT_DIR" + "\Net.Sdk.Playground"
+$GIT_SCRIPT="$PSScriptRoot" + "\ensure_git_clean.ps1"
 $CORE_PROJ_DIR="$ROOT_DIR" + "\Net.Sdk.Playground.Core"
 $CORE_ASSEMBLY_NAME="Net.Sdk.Playground.Core"
-$TEST_PROJ_DIR="$ROOT_DIR" + "\Net.Sdk.Playground.Test"
-$NET_CORE_VER="netcoreapp2.0"
-$NET_FRAMEWORK_VER="net45"
-$FRAMEWORK_DLL_PATH="$ROOT_DIR" + "\Net.Sdk.Playground\bin\Release\Net.Sdk.Playground.dll"
-$NET_CORE_CSPROJ_PATH="$CORE_PROJ_DIR" + "\Net.Sdk.Playground.Core.csproj"
-$ASSEMBLYINFO_PATH="$FRAMEWORK_PROJ_DIR" + "\Utility\AssemblyInfo.cs"
-$NET_FRAMEWORK_NUSPEC_PATH="$FRAMEWORK_PROJ_DIR" + "\Net.Sdk.Playground.nuspec"
-$REPO_OWNER="mwwoda"
-$REPO_NAME="net-sdk-playground"
 $NUGET_URL="https://api.nuget.org/v3/index.json"
-$FRAMEWORK_NUPKG_PATH="$CORE_PROJ_DIR" + "\bin\Release\" + "$CORE_ASSEMBLY_NAME" + "." + "$NextVersion" + ".nupkg"
+$CORE_NUPKG_PATH="$CORE_PROJ_DIR" + "\bin\Release\" + "$CORE_ASSEMBLY_NAME" + "." + "$NextVersion" + ".nupkg"
+$NET_CORE_VER="netcoreapp2.0"
 
 ###########################################################################
 # Ensure git tree is clean
 ###########################################################################
 
-if (git status --porcelain) { exit 0 }
+Invoke-Expression "& `"$GIT_SCRIPT`" -b $Branch"
+if ($LASTEXITCODE -ne 0) {
+    exit 1
+}
+
+###########################################################################
+# Build and Test
+###########################################################################
+
+if($BuildAndTest){
+    dotnet build $CORE_PROJ_DIR
+    dotnet test -f $NET_CORE_VER
+    dotnet clean $CORE_PROJ_DIR
+    if (test-path ("$CORE_PROJ_DIR" + "\bin")) { Remove-Item ("$CORE_PROJ_DIR" + "\bin") -r }
+    if (test-path ("$CORE_PROJ_DIR" + "\obj")) { Remove-Item ("$CORE_PROJ_DIR" + "\obj") -r }
+}else{
+    Write-Output "Skipping build and test step."
+}
 
 ###########################################################################
 # Pack Core
@@ -50,12 +58,13 @@ if (git status --porcelain) { exit 0 }
 dotnet pack $CORE_PROJ_DIR -c Release
 
 ###########################################################################
-# Publish Core to nuget
+# Publish Core to the Nuget
 ###########################################################################
 
 if ($DryRun) { 
-    Write-Output "Running in Dry run. Package will not be published"
-    exit 0
+    Write-Output "Dry run. Package will not be published"
 }else{
-    dotnet nuget push $FRAMEWORK_NUPKG_PATH -k $NugetKey -s $NUGET_URL
+    dotnet nuget push $CORE_NUPKG_PATH -k $NugetKey -s $NUGET_URL
 }
+
+exit 0
