@@ -3,7 +3,16 @@ name: dotnet package
 on: [pull_request]
 
 jobs:
-  build:
+  build-framework:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Build
+        run: msbuild ./Net.Sdk.Playground /property:Configuration=Release
+
+  build-core:
     runs-on: windows-latest
 
     steps:
@@ -12,10 +21,10 @@ jobs:
       - name: Install dependencies
         run: dotnet restore
       - name: Build
-        run: dotnet build --configuration Release --no-restore
+        run: dotnet build ./Net.Sdk.Playground.Core --configuration Release --no-restore
 
   test-framework:
-    needs: build
+    needs: build-framework
     runs-on: windows-latest
 
     steps:
@@ -23,7 +32,7 @@ jobs:
         run: dotnet test -f net45 --verbosity normal
 
   test-core:
-    needs: build
+    needs: build-core
     runs-on: windows-latest
 
     steps:
