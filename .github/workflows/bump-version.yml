@@ -9,6 +9,7 @@ on:
 jobs:
   bump-version:
     runs-on: windows-latest
+    if: startsWith(github.event.pull_request.title, 'feat:') || startsWith(github.event.pull_request.title, 'fix:')
 
     steps:
       - name: Checkout
