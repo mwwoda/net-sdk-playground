@@ -14,4 +14,4 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Bump version
-        uses: .\build\bump_version.ps1 -dr $false -gh ${{ secrets.GH_TOKEN }}
+        run: .\build\bump_version.ps1 -dr $false -gh ${{ secrets.GH_TOKEN }}
