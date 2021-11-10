@@ -5,7 +5,7 @@ Param
 
     [Parameter(Mandatory)]
     [Alias('gh')]
-    [string]$GithubToken,
+    [securestring]$GithubToken,
 
     [Alias('b')]
     [string]$Branch="main",
