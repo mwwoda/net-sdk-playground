@@ -113,6 +113,7 @@ standard-version release --skip.commit --skip.tag
 ###########################################################################
 
 # msbuild.exe $FRAMEWORK_PROJ_DIR /property:Configuration=Release
+#nuget pack $FRAMEWORK_PROJ_DIR -Prop Configuration=Release
 
 ###########################################################################
 # Pack Core

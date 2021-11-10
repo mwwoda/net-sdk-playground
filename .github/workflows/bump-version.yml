@@ -18,4 +18,4 @@ jobs:
           git config --global user.name "Mateusz Woda"
           git config --global user.email "mwoda@box.com"
       - name: Bump version
-        run: .\build\bump_version.ps1 -dr $false -gh ${{ secrets.GH_TOKEN }}
+        run: .\build\bump_version.ps1 -dr $false -gh (ConvertTo-SecureString ${{ secrets.GH_TOKEN }} -AsPlainText -Force)
