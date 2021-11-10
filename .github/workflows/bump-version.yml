@@ -11,14 +11,14 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - shell: pwsh
-        env:
-          GithubToken: ${{ secrets.GH_TOKEN }}
       - name: Checkout
         uses: actions/checkout@v2
       - name: Setup git user
         run: |
           git config --global user.name "Mateusz Woda"
           git config --global user.email "mwoda@box.com"
-      - name: Bump version
+      - shell: pwsh
+        name: Bump version
+        env:
+          GithubToken: ${{ secrets.GH_TOKEN }}
         run: .\build\bump_version.ps1 -dr $false
