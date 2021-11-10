@@ -60,9 +60,10 @@ if ($LASTEXITCODE -ne 0) {
 # Update changelog
 ###########################################################################
 
-git branch
+git log
+git tag
 
-standard-version release --skip.commit --skip.tag
+standard-version --skip.commit --skip.tag
 $NEXT_VERSION = (Select-String -Pattern [0-9]+\.[0-9]+\.[0-9]+ -Path $CHANGELOG_PATH | Select-Object -First 1).Matches.Value
 $NEXT_VERSION_TAG = "v" + "$NEXT_VERSION"
 $RELEASE_DATE = (Select-String -Pattern "\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])" -Path $CHANGELOG_PATH | Select-Object -First 1).Matches.Value
