@@ -13,7 +13,7 @@ namespace Net.Sdk.Playground
             return "Bar";
         }
 
-        public string Bar()
+        public string Bar2()
         {
             return "Bar2";
         }
