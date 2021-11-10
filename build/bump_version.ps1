@@ -60,7 +60,6 @@ if ($LASTEXITCODE -ne 0) {
 # Update changelog
 ###########################################################################
 
-git fetch --all --tags
 standard-version --skip.commit --skip.tag
 $NEXT_VERSION = (Select-String -Pattern [0-9]+\.[0-9]+\.[0-9]+ -Path $CHANGELOG_PATH | Select-Object -First 1).Matches.Value
 $NEXT_VERSION_TAG = "v" + "$NEXT_VERSION"
