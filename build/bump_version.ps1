@@ -5,7 +5,7 @@ Param
 
     [Parameter(Mandatory)]
     [Alias('gh')]
-    [securestring]$GithubToken,
+    [string]$GithubToken,
 
     [Alias('b')]
     [string]$Branch="main",
@@ -26,6 +26,10 @@ $ASSEMBLYINFO_PATH="$FRAMEWORK_PROJ_DIR" + "\Utility\AssemblyInfo.cs"
 $FRAMEWORK_NUSPEC_PATH="$FRAMEWORK_PROJ_DIR" + "\Net.Sdk.Playground.nuspec"
 $REPO_OWNER="mwwoda"
 $REPO_NAME="net-sdk-playground"
+
+if($GithubToken = $null){
+    $GithubToken = $env:GithubToken
+}
 
 ###########################################################################
 # Install dependencies
