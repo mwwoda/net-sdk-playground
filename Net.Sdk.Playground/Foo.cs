@@ -12,5 +12,10 @@ namespace Net.Sdk.Playground
         {
             return "Bar";
         }
+
+        public string Bar()
+        {
+            return "Bar2";
+        }
     }
 }
