@@ -40,7 +40,7 @@ if($GithubToken -eq $null -Or $GithubToken -eq ''){
 
 if ($InstallDependencies){
     npm install -g standard-version
-    Install-Module -Name PowerShellForGitHub
+    Install-Module -Name PowerShellForGitHub -Scope CurrentUser -Force
 }
 
 ###########################################################################
