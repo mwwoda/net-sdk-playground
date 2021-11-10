@@ -32,6 +32,18 @@ $CORE_NUPKG_PATH=$CORE_PROJ_DIR + "\bin\Release\Net.Sdk.Playground.Core." + $Nex
 $CORE_PDB_PATH=$CORE_PROJ_DIR + "\bin\Release\netstandard2.0\Net.Sdk.Playground.Core.pdb"
 
 ###########################################################################
+# Parameters validation
+###########################################################################
+
+if($GithubToken -eq $null -Or $GithubToken -eq ''){
+    $GithubToken = $env:GithubToken
+    if($GithubToken -eq $null -Or $GithubToken -eq ''){
+        Write-Output "Github token not supplied. Aborting script."
+        exit 1
+    }
+}
+
+###########################################################################
 # Install dependencies
 ###########################################################################
 

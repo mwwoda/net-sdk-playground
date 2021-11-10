@@ -29,6 +29,18 @@ $CORE_NUPKG_PATH="$CORE_PROJ_DIR" + "\bin\Release\" + "$CORE_ASSEMBLY_NAME" + ".
 $NET_CORE_VER="netcoreapp2.0"
 
 ###########################################################################
+# Parameters validation
+###########################################################################
+
+if($NugetKey -eq $null -Or $NugetKey -eq ''){
+    $NugetKey = $env:NugetKey
+    if($NugetKey -eq $null -Or $NugetKey -eq ''){
+        Write-Output "Nuget key not supplied. Aborting script."
+        exit 1
+    }
+}
+
+###########################################################################
 # Ensure git tree is clean
 ###########################################################################
 
@@ -62,7 +74,7 @@ dotnet pack $CORE_PROJ_DIR -c Release
 ###########################################################################
 
 if ($DryRun) { 
-    Write-Output "Dry run. Package will not be published"
+    Write-Output "Dry run. Package will not be published."
 }else{
     dotnet nuget push $CORE_NUPKG_PATH -k $NugetKey -s $NUGET_URL
 }

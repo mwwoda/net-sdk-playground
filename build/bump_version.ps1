@@ -26,10 +26,14 @@ $FRAMEWORK_NUSPEC_PATH="$FRAMEWORK_PROJ_DIR" + "\Net.Sdk.Playground.nuspec"
 $REPO_OWNER="mwwoda"
 $REPO_NAME="net-sdk-playground"
 
+###########################################################################
+# Parameters validation
+###########################################################################
+
 if($GithubToken -eq $null -Or $GithubToken -eq ''){
     $GithubToken = $env:GithubToken
     if($GithubToken -eq $null -Or $GithubToken -eq ''){
-        Write-Output "Github token not supplied. Aborting script"
+        Write-Output "Github token not supplied. Aborting script."
         exit 1
     }
 }

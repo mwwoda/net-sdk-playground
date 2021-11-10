@@ -38,6 +38,34 @@ $FRAMEWORK_NUPKG_PATH="$FRAMEWORK_PROJ_DIR" + "\bin\Release\" + "$FRAMEWORK_ASSE
 $NET_FRAMEWORK_VER="net45"
 
 ###########################################################################
+# Parameters validation
+###########################################################################
+
+if($NugetKey -eq $null -Or $NugetKey -eq ''){
+    $NugetKey = $env:NugetKey
+    if($NugetKey -eq $null -Or $NugetKey -eq ''){
+        Write-Output "Nuget key not supplied. Aborting script."
+        exit 1
+    }
+}
+
+if($PfxAsBase64 -eq $null -Or $PfxAsBase64 -eq ''){
+    $PfxAsBase64 = $env:PfxAsBase64
+    if($PfxAsBase64 -eq $null -Or $PfxAsBase64 -eq ''){
+        Write-Output "Pfx certifcate as base64 not supplied. Aborting script."
+        exit 1
+    }
+}
+
+if($PfxPassword -eq $null -Or $PfxPassword -eq ''){
+    $PfxPassword = $env:PfxPassword
+    if($PfxPassword -eq $null -Or $PfxPassword -eq ''){
+        Write-Output "Pfx certificate password not supplied. Aborting script."
+        exit 1
+    }
+}
+
+###########################################################################
 # Ensure git tree is clean
 ###########################################################################
 

@@ -26,11 +26,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Add msbuild to PATH
-        uses: microsoft/setup-msbuild@v1.1
-      - name: Install dependencies
-        run: dotnet restore
       - name: Build
-        run: dotnet build ./Net.Sdk.Playground.Core --configuration Release --no-restore
+        run: dotnet build ./Net.Sdk.Playground.Core --configuration Release
       - name: Test
         run: dotnet test -f netcoreapp2.0 --no-restore --verbosity normal
