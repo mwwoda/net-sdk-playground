@@ -14,6 +14,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        with: 
+          fetch-depth: '0'
       - name: Add msbuild to PATH
         uses: microsoft/setup-msbuild@v1.1
       - name: Setup git user
@@ -30,7 +32,7 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: FrameworkNupkg
-          path: ${{ github.workspace }}\Net.Sdk.Playground\bin\Release\Net.Sdk.Playground.*nupkg
+          path: ${{ github.workspace }}\Net.Sdk.Playground\Net.Sdk.Playground.*nupkg
       - uses: actions/upload-artifact@v2
         with:
           name: FrameworkPdb
@@ -43,6 +45,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        with: 
+          fetch-depth: '0'
       - name: Setup git user
         run: |
           git config --global user.name "Mateusz Woda"
@@ -60,3 +64,38 @@ jobs:
         with:
           name: CorePdb
           path: ${{ github.workspace }}\Net.Sdk.Playground.Core\bin\Release\netstandard2.0\Net.Sdk.Playground.Core.pdb
+
+  create-release:
+    needs: framework
+    needs: core
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with: 
+          fetch-depth: '0'
+      - name: Setup git user
+        run: |
+          git config --global user.name "Mateusz Woda"
+          git config --global user.email "mwoda@box.com"
+      - uses: actions/download-artifact@v2
+        with:
+          name: FrameworkNupkg
+          path: ${{ github.workspace }}\Net.Sdk.Playground
+      - uses: actions/download-artifact@v2
+        with:
+          name: FrameworkPdb
+          path: ${{ github.workspace }}\Net.Sdk.Playground\bin\Release
+      - uses: actions/download-artifact@v2
+        with:
+          name: CoreNupkg
+          path: ${{ github.workspace }}\Net.Sdk.Playground.Core\bin\Release
+      - uses: actions/download-artifact@v2
+        with:
+          name: CorePdb
+          path: ${{ github.workspace }}\Net.Sdk.Playground.Core\bin\Release\netstandard2.0
+      - shell: pwsh
+        name: Publish Core package
+        env:
+          GithubToken: ${{ secrets.GH_TOKEN }}
+        run: .\build\release.ps1
