@@ -66,8 +66,9 @@ jobs:
           path: ${{ github.workspace }}\Net.Sdk.Playground.Core\bin\Release\netstandard2.0\Net.Sdk.Playground.Core.pdb
 
   create-release:
-    needs: framework
-    needs: core
+    needs: 
+      - framework
+      - core
     runs-on: windows-latest
     steps:
       - name: Checkout
