@@ -3,11 +3,9 @@ Param
     [Alias('dr')]
     [bool]$DryRun = $true,
 
-    [Parameter(Mandatory)]
     [Alias('ng')]
     [string]$NugetKey,
 
-    [Parameter(Mandatory)]
     [Alias('nv')]
     [string]$NextVersion,
 
@@ -25,8 +23,17 @@ $GIT_SCRIPT="$PSScriptRoot" + "\ensure_git_clean.ps1"
 $CORE_PROJ_DIR="$ROOT_DIR" + "\Net.Sdk.Playground.Core"
 $CORE_ASSEMBLY_NAME="Net.Sdk.Playground.Core"
 $NUGET_URL="https://api.nuget.org/v3/index.json"
-$CORE_NUPKG_PATH="$CORE_PROJ_DIR" + "\bin\Release\" + "$CORE_ASSEMBLY_NAME" + "." + "$NextVersion" + ".nupkg"
 $NET_CORE_VER="netcoreapp2.0"
+$CHANGELOG_PATH="$ROOT_DIR" + "\CHANGELOG.md"
+
+if($NextVersion -eq $null -Or $NextVersion -eq ''){
+    $NextVersion = $env:NextVersion
+    if($NextVersion -eq $null -Or $NextVersion -eq ''){
+        $NextVersion = (Select-String -Pattern [0-9]+\.[0-9]+\.[0-9]+ -Path $CHANGELOG_PATH | Select-Object -First 1).Matches.Value
+    }
+}
+
+$CORE_NUPKG_PATH="$CORE_PROJ_DIR" + "\bin\Release\" + "$CORE_ASSEMBLY_NAME" + "." + "$NextVersion" + ".nupkg"
 
 ###########################################################################
 # Parameters validation

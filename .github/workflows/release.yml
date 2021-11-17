@@ -1,0 +1,62 @@
+name: Release
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  framework:
+    runs-on: windows-latest
+    #if: startsWith(github.event.head_commit.message , '"chore:" release v')
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.1
+      - name: Setup git user
+        run: |
+          git config --global user.name "Mateusz Woda"
+          git config --global user.email "mwoda@box.com"
+      - shell: pwsh
+        name: Publish framework package
+        env:
+          NugetKey: ${{ secrets.NUGET_KEY }}
+          PfxAsBase64: ${{ secrets.PFX_KEY_BASE64 }}
+          PfxPassword: ${{ secrets.PFX_PASSWORD }}
+        run: .\build\publish_framework_package.ps1
+      - uses: actions/upload-artifact@v2
+        with:
+          name: FrameworkNupkg
+          path: /Net.Sdk.Playground/bin/Release/Net.Sdk.Playground.*nupkg
+      - uses: actions/upload-artifact@v2
+        with:
+          name: FrameworkPdb
+          path: /Net.Sdk.Playground/bin/Release/Net.Sdk.Playground.pdb
+
+  framework:
+    core-on: windows-latest
+    #if: startsWith(github.event.head_commit.message , '"chore:" release v')
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup git user
+        run: |
+          git config --global user.name "Mateusz Woda"
+          git config --global user.email "mwoda@box.com"
+      - shell: pwsh
+        name: Publish Core package
+        env:
+          NugetKey: ${{ secrets.NUGET_KEY }}
+        run: .\build\publish_core_package.ps1
+      - uses: actions/upload-artifact@v2
+        with:
+          name: CoreNupkg
+          path: /Net.Sdk.Playground.Core/bin/Release/Net.Sdk.Playground.Core.*nupkg
+      - uses: actions/upload-artifact@v2
+        with:
+          name: CorePdb
+          path: /Net.Sdk.Playground.Core/bin/Release/netstandard2.0/Net.Sdk.Playground.Core.pdb

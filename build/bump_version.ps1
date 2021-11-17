@@ -95,9 +95,9 @@ if($DryRun){
     $prParams = @{
         OwnerName = $REPO_OWNER
         RepositoryName = $REPO_NAME
-        Title = "chore: " + $NEXT_VERSION_TAG 
+        Title = "chore: release" + $NEXT_VERSION_TAG 
         Head = $NEXT_VERSION_TAG
-        Base = 'main'
+        Base = $Branch
         Body = "Bumping version files for the next release! " + $NEXT_VERSION_TAG
         MaintainerCanModify = $true
     }

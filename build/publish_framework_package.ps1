@@ -3,11 +3,9 @@ Param
     [Alias('dr')]
     [bool]$DryRun = $true,
 
-    [Parameter(Mandatory)]
     [Alias('ng')]
     [string]$NugetKey,
 
-    [Parameter(Mandatory)]
     [Alias('nv')]
     [string]$NextVersion,
 
@@ -34,8 +32,17 @@ $GIT_SCRIPT="$PSScriptRoot" + "\ensure_git_clean.ps1"
 $FRAMEWORK_PROJ_DIR="$ROOT_DIR" + "\Net.Sdk.Playground"
 $FRAMEWORK_ASSEMBLY_NAME="Net.Sdk.Playground"
 $NUGET_URL="https://api.nuget.org/v3/index.json"
-$FRAMEWORK_NUPKG_PATH="$FRAMEWORK_PROJ_DIR" + "\bin\Release\" + "$FRAMEWORK_ASSEMBLY_NAME" + "." + "$NextVersion" + ".nupkg"
 $NET_FRAMEWORK_VER="net45"
+$CHANGELOG_PATH="$ROOT_DIR" + "\CHANGELOG.md"
+
+if($NextVersion -eq $null -Or $NextVersion -eq ''){
+    $NextVersion = $env:NextVersion
+    if($NextVersion -eq $null -Or $NextVersion -eq ''){
+        $NextVersion = (Select-String -Pattern [0-9]+\.[0-9]+\.[0-9]+ -Path $CHANGELOG_PATH | Select-Object -First 1).Matches.Value
+    }
+}
+
+$FRAMEWORK_NUPKG_PATH="$FRAMEWORK_PROJ_DIR" + "\bin\Release\" + "$FRAMEWORK_ASSEMBLY_NAME" + "." + "$NextVersion" + ".nupkg"
 
 ###########################################################################
 # Parameters validation
@@ -71,7 +78,7 @@ if($PfxPassword -eq $null -Or $PfxPassword -eq ''){
 
 Invoke-Expression "& `"$GIT_SCRIPT`" -b $Branch"
 if ($LASTEXITCODE -ne 0) {
-   exit 1
+    exit 1
 }
 
 ###########################################################################
