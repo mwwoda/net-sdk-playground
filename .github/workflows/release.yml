@@ -2,9 +2,9 @@ name: Release
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
+  #push:
+  #  branches:
+  #    - main
 
 jobs:
   framework:
@@ -30,11 +30,11 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: FrameworkNupkg
-          path: /Net.Sdk.Playground/bin/Release/Net.Sdk.Playground.*nupkg
+          path: ${{ github.workspace }}\Net.Sdk.Playground\bin\Release\Net.Sdk.Playground.*nupkg
       - uses: actions/upload-artifact@v2
         with:
           name: FrameworkPdb
-          path: /Net.Sdk.Playground/bin/Release/Net.Sdk.Playground.pdb
+          path: ${{ github.workspace }}\Net.Sdk.Playground\bin\Release\Net.Sdk.Playground.pdb
 
   core:
     runs-on: windows-latest
@@ -55,8 +55,8 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: CoreNupkg
-          path: /Net.Sdk.Playground.Core/bin/Release/Net.Sdk.Playground.Core.*nupkg
+          path: ${{ github.workspace }}\Net.Sdk.Playground.Core\bin\Release\Net.Sdk.Playground.Core.*nupkg
       - uses: actions/upload-artifact@v2
         with:
           name: CorePdb
-          path: /Net.Sdk.Playground.Core/bin/Release/netstandard2.0/Net.Sdk.Playground.Core.pdb
+          path: ${{ github.workspace }}\Net.Sdk.Playground.Core\bin\Release\netstandard2.0\Net.Sdk.Playground.Core.pdb
