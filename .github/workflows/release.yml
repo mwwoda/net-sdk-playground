@@ -36,8 +36,8 @@ jobs:
           name: FrameworkPdb
           path: /Net.Sdk.Playground/bin/Release/Net.Sdk.Playground.pdb
 
-  framework:
-    core-on: windows-latest
+  core:
+    runs-on: windows-latest
     #if: startsWith(github.event.head_commit.message , '"chore:" release v')
 
     steps:
