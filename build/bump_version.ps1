@@ -13,18 +13,9 @@ Param
     [bool]$InstallDependencies = $true
 )
 
-$ErrorActionPreference = "Stop"
+. $PSScriptRoot\variables.ps1
 
-$ROOT_DIR=$pwd
-$GIT_SCRIPT="$PSScriptRoot" + "\ensure_git_clean.ps1"
-$CHANGELOG_PATH="$ROOT_DIR" + "\CHANGELOG.md"
-$FRAMEWORK_PROJ_DIR="$ROOT_DIR" + "\Net.Sdk.Playground"
-$CORE_PROJ_DIR="$ROOT_DIR" + "\Net.Sdk.Playground.Core"
-$CORE_CSPROJ_PATH="$CORE_PROJ_DIR" + "\Net.Sdk.Playground.Core.csproj"
-$ASSEMBLYINFO_PATH="$FRAMEWORK_PROJ_DIR" + "\Utility\AssemblyInfo.cs"
-$FRAMEWORK_NUSPEC_PATH="$FRAMEWORK_PROJ_DIR" + "\Net.Sdk.Playground.nuspec"
-$REPO_OWNER="mwwoda"
-$REPO_NAME="net-sdk-playground"
+$ErrorActionPreference = "Stop"
 
 ###########################################################################
 # Parameters validation
@@ -53,7 +44,7 @@ if ($InstallDependencies){
 
 Invoke-Expression "& `"$GIT_SCRIPT`" -b $Branch"
 if ($LASTEXITCODE -ne 0) {
-    exit 1
+   exit 1
 }
 
 ###########################################################################

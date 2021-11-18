@@ -16,15 +16,9 @@ Param
     [bool]$BuildAndTest =  $true
 )
 
-$ErrorActionPreference = "Stop"
+. $PSScriptRoot\variables.ps1
 
-$ROOT_DIR=$pwd
-$GIT_SCRIPT="$PSScriptRoot" + "\ensure_git_clean.ps1"
-$CORE_PROJ_DIR="$ROOT_DIR" + "\Net.Sdk.Playground.Core"
-$CORE_ASSEMBLY_NAME="Net.Sdk.Playground.Core"
-$NUGET_URL="https://api.nuget.org/v3/index.json"
-$NET_CORE_VER="netcoreapp2.0"
-$CHANGELOG_PATH="$ROOT_DIR" + "\CHANGELOG.md"
+$ErrorActionPreference = "Stop"
 
 if($NextVersion -eq $null -Or $NextVersion -eq ''){
     $NextVersion = $env:NextVersion

@@ -15,14 +15,7 @@ Param
 
 $ErrorActionPreference = "Stop"
 
-$ROOT_DIR=$pwd
-$FRAMEWORK_PROJ_DIR="$ROOT_DIR" + "\Net.Sdk.Playground"
-$CORE_PROJ_DIR="$ROOT_DIR" + "\Net.Sdk.Playground.Core"
-$CHANGELOG_PATH="$ROOT_DIR" + "\CHANGELOG.md"
-$REPO_OWNER="mwwoda"
-$REPO_NAME="net-sdk-playground"
-$FRAMEWORK_PDB_PATH=$FRAMEWORK_PROJ_DIR + "\bin\Release\Net.Sdk.Playground.pdb"
-$CORE_PDB_PATH=$CORE_PROJ_DIR + "\bin\Release\netstandard2.0\Net.Sdk.Playground.Core.pdb"
+. $PSScriptRoot\variables.ps1
 
 if($NextVersion -eq $null -Or $NextVersion -eq ''){
     $NextVersion = $env:NextVersion
