@@ -88,10 +88,9 @@ if ($InstallDependencies){
 ###########################################################################
 
 $Bytes = [Convert]::FromBase64String($PfxAsBase64)
-$PfxPath = "$FRAMEWORK_PROJ_DIR" + "\AssemblySigningKey.pfx"
-[IO.File]::WriteAllBytes($PfxPath, $Bytes)
-.\SnInstallPfx.exe $PfxPath $PfxPassword
-Remove-Item $PfxPath 
+[IO.File]::WriteAllBytes($PFX_PATH, $Bytes)
+.\SnInstallPfx.exe $PFX_PATH $PfxPassword
+Remove-Item $PFX_PATH 
 
 ###########################################################################
 # Build and Test
