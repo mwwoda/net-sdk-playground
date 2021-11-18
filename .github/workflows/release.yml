@@ -29,6 +29,12 @@ jobs:
           PfxAsBase64: ${{ secrets.PFX_KEY_BASE64 }}
           PfxPassword: ${{ secrets.PFX_PASSWORD }}
         run: .\build\publish_framework_package.ps1
+      - name: List files
+        run: ls
+      - name: echo pwd
+        run: pwd
+      - name: echo workspace
+        run: echo ${{ github.workspace }}
       - uses: actions/upload-artifact@v2
         with:
           name: FrameworkNupkg
@@ -83,10 +89,10 @@ jobs:
         with:
           name: FrameworkNupkg
           path: ${{ github.workspace }}\Net.Sdk.Playground
-      - uses: actions/download-artifact@v2
-        with:
-          name: FrameworkPdb
-          path: ${{ github.workspace }}\Net.Sdk.Playground\bin\Release
+      # - uses: actions/download-artifact@v2
+      #   with:
+      #     name: FrameworkPdb
+      #     path: ${{ github.workspace }}\Net.Sdk.Playground\bin\Release
       - uses: actions/download-artifact@v2
         with:
           name: CoreNupkg
