@@ -106,7 +106,15 @@ Remove-Item $PfxPath
 
 if($BuildAndTest){
     msbuild $FRAMEWORK_PROJ_DIR /property:Configuration=Release
+    if ($LASTEXITCODE -ne 0) {
+        Write-Output "Compilation failed. Aborting script."
+        exit 1
+    }
     dotnet test -f $NET_FRAMEWORK_VER --verbosity normal
+    if ($LASTEXITCODE -ne 0) {
+        Write-Output "Some of the unit test failed. Aborting script."
+        exit 1
+    }
     dotnet clean $FRAMEWORK_PROJ_DIR
     if (test-path ("$FRAMEWORK_PROJ_DIR" + "\bin")) { Remove-Item ("$FRAMEWORK_PROJ_DIR" + "\bin") -r }
     if (test-path ("$FRAMEWORK_PROJ_DIR" + "\obj")) { Remove-Item ("$FRAMEWORK_PROJ_DIR" + "\obj") -r }
@@ -120,6 +128,10 @@ if($BuildAndTest){
 
 nuget restore $SLN_PATH
 nuget pack $FRAMEWORK_PROJ_DIR -Build -Prop Configuration=Release
+if ($LASTEXITCODE -ne 0) {
+    Write-Output "Package creation failed. Aborting script."
+    exit 1
+}
 
 ###########################################################################
 # Publish Framework to the Nuget

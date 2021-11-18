@@ -53,7 +53,7 @@ if($NugetKey -eq $null -Or $NugetKey -eq ''){
 
 Invoke-Expression "& `"$GIT_SCRIPT`" -b $Branch"
 if ($LASTEXITCODE -ne 0) {
-    exit 1
+   exit 1
 }
 
 ###########################################################################
@@ -62,7 +62,15 @@ if ($LASTEXITCODE -ne 0) {
 
 if($BuildAndTest){
     dotnet build $CORE_PROJ_DIR
+    if ($LASTEXITCODE -ne 0) {
+        Write-Output "Compilation failed. Aborting script."
+        exit 1
+    }
     dotnet test -f $NET_CORE_VER
+    if ($LASTEXITCODE -ne 0) {
+        Write-Output "Some of the unit test failed. Aborting script."
+        exit 1
+    }
     dotnet clean $CORE_PROJ_DIR
     if (test-path ("$CORE_PROJ_DIR" + "\bin")) { Remove-Item ("$CORE_PROJ_DIR" + "\bin") -r }
     if (test-path ("$CORE_PROJ_DIR" + "\obj")) { Remove-Item ("$CORE_PROJ_DIR" + "\obj") -r }
@@ -75,6 +83,10 @@ if($BuildAndTest){
 ###########################################################################
 
 dotnet pack $CORE_PROJ_DIR -c Release
+if ($LASTEXITCODE -ne 0) {
+    Write-Output "Package creation failed. Aborting script."
+    exit 1
+}
 
 ###########################################################################
 # Publish Core to the Nuget
