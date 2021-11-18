@@ -18,7 +18,6 @@ $ErrorActionPreference = "Stop"
 $ROOT_DIR=$pwd
 $FRAMEWORK_PROJ_DIR="$ROOT_DIR" + "\Net.Sdk.Playground"
 $CORE_PROJ_DIR="$ROOT_DIR" + "\Net.Sdk.Playground.Core"
-$NET_CORE_CSPROJ_PATH="$CORE_PROJ_DIR" + "\Net.Sdk.Playground.Core.csproj"
 $CHANGELOG_PATH="$ROOT_DIR" + "\CHANGELOG.md"
 $REPO_OWNER="mwwoda"
 $REPO_NAME="net-sdk-playground"
@@ -77,7 +76,6 @@ foreach($line in Get-Content $CHANGELOG_PATH) {
 $ReleaseNotes = $ReleaseNotes.replace('### ' , '').trim()
 $ReleaseNotes += "`n`n$FRAMEWORK_PACKAGE_LINK`n"
 $ReleaseNotes += "$CORE_PACKAGE_LINK"
-echo $ReleaseNotes
 
 ###########################################################################
 # Create git release
