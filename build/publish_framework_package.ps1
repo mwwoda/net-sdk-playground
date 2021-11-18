@@ -117,8 +117,7 @@ if($BuildAndTest){
 # Pack Framework
 ###########################################################################
 
-msbuild $FRAMEWORK_PROJ_DIR /property:Configuration=Release
-nuget pack $FRAMEWORK_PROJ_DIR -Prop Configuration=Release
+nuget pack $FRAMEWORK_PROJ_DIR -Build -Prop Configuration=Release
 
 ###########################################################################
 # Publish Framework to the Nuget

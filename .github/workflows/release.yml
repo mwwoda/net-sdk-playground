@@ -18,6 +18,8 @@ jobs:
           fetch-depth: '0'
       - name: Add msbuild to PATH
         uses: microsoft/setup-msbuild@v1.1
+      - name: Setup Nuget
+        uses: Nuget/setup-nuget@v1.0.5
       - name: Setup git user
         run: |
           git config --global user.name "Mateusz Woda"
