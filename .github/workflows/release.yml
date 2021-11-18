@@ -30,13 +30,7 @@ jobs:
           NugetKey: ${{ secrets.NUGET_KEY }}
           PfxAsBase64: ${{ secrets.PFX_KEY_BASE64 }}
           PfxPassword: ${{ secrets.PFX_PASSWORD }}
-        run: .\build\publish_framework_package.ps1
-      - name: List files
-        run: ls
-      - name: echo pwd
-        run: pwd
-      - name: echo workspace
-        run: echo ${{ github.workspace }}
+        run: .\build\publish_framework_package.ps1 -dr $false
       - uses: actions/upload-artifact@v2
         with:
           name: FrameworkNupkg
@@ -63,7 +57,7 @@ jobs:
         name: Publish Core package
         env:
           NugetKey: ${{ secrets.NUGET_KEY }}
-        run: .\build\publish_core_package.ps1
+        run: .\build\publish_core_package.ps1 -dr $false
       - uses: actions/upload-artifact@v2
         with:
           name: CoreNupkg
@@ -91,10 +85,10 @@ jobs:
         with:
           name: FrameworkNupkg
           path: ${{ github.workspace }}\Net.Sdk.Playground
-      # - uses: actions/download-artifact@v2
-      #   with:
-      #     name: FrameworkPdb
-      #     path: ${{ github.workspace }}\Net.Sdk.Playground\bin\Release
+      - uses: actions/download-artifact@v2
+        with:
+          name: FrameworkPdb
+          path: ${{ github.workspace }}\Net.Sdk.Playground\bin\Release
       - uses: actions/download-artifact@v2
         with:
           name: CoreNupkg
@@ -104,7 +98,7 @@ jobs:
           name: CorePdb
           path: ${{ github.workspace }}\Net.Sdk.Playground.Core\bin\Release\netstandard2.0
       - shell: pwsh
-        name: Publish Core package
+        name: Create Github release
         env:
           GithubToken: ${{ secrets.GH_TOKEN }}
-        run: .\build\release.ps1
+        run: .\build\release.ps1 -dr $false
