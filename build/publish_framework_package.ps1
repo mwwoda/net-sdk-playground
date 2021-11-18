@@ -31,6 +31,7 @@ $ROOT_DIR=$pwd
 $GIT_SCRIPT="$PSScriptRoot" + "\ensure_git_clean.ps1"
 $FRAMEWORK_PROJ_DIR="$ROOT_DIR" + "\Net.Sdk.Playground"
 $FRAMEWORK_ASSEMBLY_NAME="Net.Sdk.Playground"
+$SLN_PATH="$ROOT_DIR" + "\Net.Sdk.Playground.sln"
 $NUGET_URL="https://api.nuget.org/v3/index.json"
 $NET_FRAMEWORK_VER="net45"
 $CHANGELOG_PATH="$ROOT_DIR" + "\CHANGELOG.md"
@@ -117,6 +118,7 @@ if($BuildAndTest){
 # Pack Framework
 ###########################################################################
 
+nuget restore $SLN_PATH
 nuget pack $FRAMEWORK_PROJ_DIR -Build -Prop Configuration=Release
 
 ###########################################################################
