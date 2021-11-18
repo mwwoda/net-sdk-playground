@@ -54,7 +54,7 @@ if($GithubToken -eq $null -Or $GithubToken -eq ''){
 ###########################################################################
 
 if ($InstallDependencies){
-    Install-Module -Name PowerShellForGitHub
+    Install-Module -Name PowerShellForGitHub -Scope CurrentUser -Force
 }
 
 ###########################################################################

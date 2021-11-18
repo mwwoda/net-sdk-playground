@@ -43,7 +43,7 @@ if($NextVersion -eq $null -Or $NextVersion -eq ''){
     }
 }
 
-$FRAMEWORK_NUPKG_PATH="$FRAMEWORK_PROJ_DIR" + "\bin\Release\" + "$FRAMEWORK_ASSEMBLY_NAME" + "." + "$NextVersion" + ".nupkg"
+$FRAMEWORK_NUPKG_PATH="$ROOT_DIR" + "\" + "$FRAMEWORK_ASSEMBLY_NAME" + "." + "$NextVersion" + ".nupkg"
 
 ###########################################################################
 # Parameters validation
