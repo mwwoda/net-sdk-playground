@@ -38,7 +38,7 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: FrameworkNupkg
-          path: Net.Sdk.Playground.*nupkg
+          path: ${{ github.workspace }}\Net.Sdk.Playground.*nupkg
       - uses: actions/upload-artifact@v2
         with:
           name: FrameworkPdb
