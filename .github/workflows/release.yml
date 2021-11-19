@@ -42,7 +42,7 @@ jobs:
 
   core:
     runs-on: windows-latest
-    #if: startsWith(github.event.head_commit.message , '"chore:" release v')
+    if: startsWith(github.event.head_commit.message , '"chore:" release v')
 
     steps:
       - name: Checkout
