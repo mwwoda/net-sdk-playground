@@ -44,7 +44,7 @@ if ($InstallDependencies){
 
 Invoke-Expression "& `"$GIT_SCRIPT`" -b $Branch"
 if ($LASTEXITCODE -ne 0) {
-   exit 1
+   #exit 1
 }
 
 ###########################################################################
@@ -74,6 +74,9 @@ $RELEASE_NOTE_LINK = $NEXT_VERSION.Replace(".", "") + "-" + "$RELEASE_DATE"
 if($DryRun){
     Write-Output "Dry run. PR with version bump will not be created."
 }else{
+    git remote set-url origin https://mwwoda:$GithubToken@github.com/mwwoda/net-sdk-playground.git
+    git config user.mail "mwoda@box"
+    git config user.name "mwwoda" 
     git branch -D $NEXT_VERSION_TAG
     git checkout -b $NEXT_VERSION_TAG
     git commit -am $NEXT_VERSION_TAG
