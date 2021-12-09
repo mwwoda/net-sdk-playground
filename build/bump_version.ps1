@@ -73,7 +73,7 @@ $RELEASE_NOTE_LINK = $NEXT_VERSION.Replace(".", "") + "-" + "$RELEASE_DATE"
 
 if($DryRun){
     Write-Output "Dry run. PR with version bump will not be created."
-}else{ d
+}else{
     git branch -D $NEXT_VERSION_TAG
     git checkout -b $NEXT_VERSION_TAG
     git commit -am $NEXT_VERSION_TAG
