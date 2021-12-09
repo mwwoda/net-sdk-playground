@@ -96,7 +96,7 @@ $RELEASE_NOTE_LINK = $NEXT_VERSION.Replace(".", "") + "-" + "$RELEASE_DATE"
 if($DryRun){
     Write-Output "Dry run. PR with version bump will not be created."
 }else{
-    $RepoLink = "https://" + $REPO_OWNER + ":" + $GithubToken + "github.com/" + $REPO_OWNER + "/" + $REPO_NAME + " .git"
+    $RepoLink = "https://" + $REPO_OWNER + ":" + $GithubToken + "github.com/" + $REPO_OWNER + "/" + $REPO_NAME + ".git"
     git remote set-url origin $RepoLink
     git config user.name $GithubUsername
     git config user.mail $GithubEmail
