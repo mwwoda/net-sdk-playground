@@ -96,6 +96,7 @@ $Bytes = [Convert]::FromBase64String($PfxAsBase64)
 ###########################################################################
 
 if($BuildAndTest){
+    nuget restore $SLN_PATH
     msbuild $FRAMEWORK_PROJ_DIR /property:Configuration=Release
     if ($LASTEXITCODE -ne 0) {
         Remove-Item $PFX_PATH
