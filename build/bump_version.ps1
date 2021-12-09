@@ -6,6 +6,12 @@ Param
     [Alias('gh')]
     [string]$GithubToken,
 
+    [Alias('gu')]
+    [string]$GithubUsername,
+
+    [Alias('ge')]
+    [string]$GithubEmail,
+
     [Alias('b')]
     [string]$Branch="main",
 
@@ -25,6 +31,22 @@ if($GithubToken -eq $null -Or $GithubToken -eq ''){
     $GithubToken = $env:GithubToken
     if($GithubToken -eq $null -Or $GithubToken -eq ''){
         Write-Output "Github token not supplied. Aborting script."
+        exit 1
+    }
+}
+
+if($GithubUsername -eq $null -Or $GithubUsername -eq ''){
+    $GithubUsername = $env:GithubUsername
+    if($GithubUsername -eq $null -Or $GithubUsername -eq ''){
+        Write-Output "Github username not supplied. Aborting script."
+        exit 1
+    }
+}
+
+if($GithubEmail -eq $null -Or $GithubEmail -eq ''){
+    $GithubEmail = $env:GithubEmail
+    if($GithubEmail -eq $null -Or $GithubEmail -eq ''){
+        Write-Output "Github email not supplied. Aborting script."
         exit 1
     }
 }
@@ -74,6 +96,10 @@ $RELEASE_NOTE_LINK = $NEXT_VERSION.Replace(".", "") + "-" + "$RELEASE_DATE"
 if($DryRun){
     Write-Output "Dry run. PR with version bump will not be created."
 }else{
+    $RepoLink = "https://" + $REPO_OWNER + ":" + $GithubToken + "github.com/" + $REPO_OWNER + "/" + $REPO_NAME + " .git"
+    git remote set-url origin $RepoLink
+    git config user.name $GithubUsername
+    git config user.mail $GithubEmail
     git branch -D $NEXT_VERSION_TAG
     git checkout -b $NEXT_VERSION_TAG
     git commit -am $NEXT_VERSION_TAG

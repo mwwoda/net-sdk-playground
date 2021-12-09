@@ -24,7 +24,7 @@ if($NextVersion -eq $null -Or $NextVersion -eq ''){
     }
 }
 
-$FRAMEWORK_NUPKG_PATH=$FRAMEWORK_PROJ_DIR + "\" + $FRAMEWORK_ASSEMBLY_NAME + "." + $NextVersion + ".nupkg"
+$FRAMEWORK_NUPKG_PATH="$ROOT_DIR" + "\" + "$FRAMEWORK_ASSEMBLY_NAME" + "." + "$NextVersion" + ".nupkg"
 $CORE_NUPKG_PATH=$CORE_PROJ_DIR + "\bin\Release\" + $CORE_ASSEMBLY_NAME + "." + $NextVersion + ".nupkg"
 $FRAMEWORK_PACKAGE_LINK = "https://www.nuget.org/packages/" + $FRAMEWORK_ASSEMBLY_NAME + "/" + $NextVersion
 $CORE_PACKAGE_LINK = "https://www.nuget.org/packages/" + $CORE_ASSEMBLY_NAME + "/" + $NextVersion
