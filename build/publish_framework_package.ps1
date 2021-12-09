@@ -89,8 +89,7 @@ if ($InstallDependencies){
 
 $Bytes = [Convert]::FromBase64String($PfxAsBase64)
 [IO.File]::WriteAllBytes($PFX_PATH, $Bytes)
-.\SnInstallPfx.exe $PFX_PATH $PfxPassword
-Remove-Item $PFX_PATH 
+.\SnInstallPfx.exe $PFX_PATH $PfxPassword 
 
 ###########################################################################
 # Build and Test
@@ -99,11 +98,15 @@ Remove-Item $PFX_PATH
 if($BuildAndTest){
     msbuild $FRAMEWORK_PROJ_DIR /property:Configuration=Release
     if ($LASTEXITCODE -ne 0) {
+        Remove-Item $PFX_PATH
+        certutil -csp "Microsoft Strong Cryptographic Provider" -key | Select-String -Pattern "VS_KEY" | ForEach-Object{ $_.ToString().Trim()} | ForEach-Object{ certutil -delkey -csp "Microsoft Strong Cryptographic Provider" $_}
         Write-Output "Compilation failed. Aborting script."
         exit 1
     }
     dotnet test -f $NET_FRAMEWORK_VER --verbosity normal
     if ($LASTEXITCODE -ne 0) {
+        Remove-Item $PFX_PATH
+        certutil -csp "Microsoft Strong Cryptographic Provider" -key | Select-String -Pattern "VS_KEY" | ForEach-Object{ $_.ToString().Trim()} | ForEach-Object{ certutil -delkey -csp "Microsoft Strong Cryptographic Provider" $_}
         Write-Output "Some of the unit test failed. Aborting script."
         exit 1
     }
@@ -121,6 +124,8 @@ if($BuildAndTest){
 nuget restore $SLN_PATH
 nuget pack $FRAMEWORK_PROJ_DIR -Build -Prop Configuration=Release
 if ($LASTEXITCODE -ne 0) {
+    Remove-Item $PFX_PATH
+    certutil -csp "Microsoft Strong Cryptographic Provider" -key | Select-String -Pattern "VS_KEY" | ForEach-Object{ $_.ToString().Trim()} | ForEach-Object{ certutil -delkey -csp "Microsoft Strong Cryptographic Provider" $_}
     Write-Output "Package creation failed. Aborting script."
     exit 1
 }
@@ -139,6 +144,7 @@ if ($DryRun) {
 # Clean all VS_KEY_* containers
 ###########################################################################
 
+Remove-Item $PFX_PATH
 certutil -csp "Microsoft Strong Cryptographic Provider" -key | Select-String -Pattern "VS_KEY" | ForEach-Object{ $_.ToString().Trim()} | ForEach-Object{ certutil -delkey -csp "Microsoft Strong Cryptographic Provider" $_}
 
 exit 0
