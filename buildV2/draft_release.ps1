@@ -9,6 +9,9 @@ Param
     [Alias('nv')]
     [string]$NextVersion,
 
+    [Alias('b')]
+    [string]$Branch="main",
+
     [Alias('id')]
     [bool]$InstallDependencies = $true
 )
