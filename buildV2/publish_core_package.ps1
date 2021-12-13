@@ -16,7 +16,10 @@ Param
     [string]$Branch="main",
 
     [Alias('bt')]
-    [bool]$BuildAndTest =  $true
+    [bool]$BuildAndTest =  $true,
+
+    [Alias('id')]
+    [bool]$InstallDependencies = $true
 )
 
 . $PSScriptRoot\variables.ps1
@@ -112,7 +115,8 @@ if ($DryRun) {
     $Cred = New-Object System.Management.Automation.PSCredential ("Release_Bot", $password)
     Set-GitHubAuthentication -SessionOnly -Credential $Cred
 
-    $release = Get-GitHubRelease -OwnerName $REPO_OWNER -RepositoryName $REPO_NAME -Tag $NextVersion
+    $releases = Get-GitHubRelease -OwnerName $REPO_OWNER -RepositoryName $REPO_NAME
+    $release = ($releases | Where-Object { $_.Name -eq $NextVersion })
 
     $release | New-GitHubReleaseAsset -Path $CORE_NUPKG_PATH
     $release | New-GitHubReleaseAsset -Path $CORE_PDB_PATH

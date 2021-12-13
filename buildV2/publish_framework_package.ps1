@@ -154,7 +154,8 @@ if ($DryRun) {
     $Cred = New-Object System.Management.Automation.PSCredential ("Release_Bot", $password)
     Set-GitHubAuthentication -SessionOnly -Credential $Cred
 
-    $release = Get-GitHubRelease -OwnerName $REPO_OWNER -RepositoryName $REPO_NAME -Tag $NextVersion
+    $releases = Get-GitHubRelease -OwnerName $REPO_OWNER -RepositoryName $REPO_NAME
+    $release = ($releases | Where-Object { $_.Name -eq $NextVersion })
 
     $release | New-GitHubReleaseAsset -Path $FRAMEWORK_NUPKG_PATH
     $release | New-GitHubReleaseAsset -Path $FRAMEWORK_PDB_PATH

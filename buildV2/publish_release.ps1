@@ -55,7 +55,9 @@ if($DryRun){
     $Cred = New-Object System.Management.Automation.PSCredential ("Release_Bot", $password)
     Set-GitHubAuthentication -SessionOnly -Credential $Cred
 
-    Set-GitHubRelease -OwnerName $REPO_OWNER -RepositoryName $REPO_NAME -Tag $NextVersion -Draft $false
+    $releases = Get-GitHubRelease -OwnerName $REPO_OWNER -RepositoryName $REPO_NAME
+    $release = ($releases | Where-Object { $_.Name -eq $NextVersion })
+    Set-GitHubRelease -OwnerName $REPO_OWNER -RepositoryName $REPO_NAME -Release $release."ID" -Draft $false
 
     Clear-GitHubAuthentication
 }

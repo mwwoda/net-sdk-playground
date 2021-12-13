@@ -62,7 +62,7 @@ jobs:
           GithubToken: ${{ secrets.GH_TOKEN }}
         run: .\buildV2\publish_core_package.ps1 -dr $false
 
-  create-release:
+  publish-release:
     needs: 
       - framework
       - core
@@ -92,4 +92,4 @@ jobs:
         name: Update Github release
         env:
           GithubToken: ${{ secrets.GH_TOKEN }}
-        run: .\buildV2\release.ps1 -dr $false
+        run: .\buildV2\publish_release.ps1 -dr $false
