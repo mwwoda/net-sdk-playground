@@ -23,6 +23,7 @@ if($NextVersion -eq $null -Or $NextVersion -eq ''){
         $NextVersion = (Select-String -Pattern [0-9]+\.[0-9]+\.[0-9]+ -Path $CHANGELOG_PATH | Select-Object -First 1).Matches.Value
     }
 }
+$NextVersionTag = "v" + $NextVersion
 
 ###########################################################################
 # Parameters validation
@@ -56,8 +57,14 @@ if($DryRun){
     Set-GitHubAuthentication -SessionOnly -Credential $Cred
 
     $releases = Get-GitHubRelease -OwnerName $REPO_OWNER -RepositoryName $REPO_NAME
-    $release = ($releases | Where-Object { $_.Name -eq $NextVersion })
-    Set-GitHubRelease -OwnerName $REPO_OWNER -RepositoryName $REPO_NAME -Release $release."ID" -Draft $false
+    $release = ($releases | Where-Object { $_.Name -eq $NextVersionTag })
+    $releaseParams = @{
+        Release = $release."ID"
+        OwnerName = $REPO_OWNER
+        RepositoryName = $REPO_NAME
+        Draft = $false
+    }
+    Set-GitHubRelease @releaseParams
 
     Clear-GitHubAuthentication
 }

@@ -38,6 +38,7 @@ if($NextVersion -eq $null -Or $NextVersion -eq ''){
         $NextVersion = (Select-String -Pattern [0-9]+\.[0-9]+\.[0-9]+ -Path $CHANGELOG_PATH | Select-Object -First 1).Matches.Value
     }
 }
+$NextVersionTag = "v" + $NextVersion
 
 $FRAMEWORK_NUPKG_PATH="$ROOT_DIR" + "\" + "$FRAMEWORK_ASSEMBLY_NAME" + "." + "$NextVersion" + ".nupkg"
 
@@ -155,7 +156,7 @@ if ($DryRun) {
     Set-GitHubAuthentication -SessionOnly -Credential $Cred
 
     $releases = Get-GitHubRelease -OwnerName $REPO_OWNER -RepositoryName $REPO_NAME
-    $release = ($releases | Where-Object { $_.Name -eq $NextVersion })
+    $release = ($releases | Where-Object { $_.Name -eq $NextVersionTag })
 
     $release | New-GitHubReleaseAsset -Path $FRAMEWORK_NUPKG_PATH
     $release | New-GitHubReleaseAsset -Path $FRAMEWORK_PDB_PATH
