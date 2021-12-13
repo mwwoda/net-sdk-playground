@@ -16,8 +16,12 @@ jobs:
         uses: actions/checkout@v2
         with: 
           fetch-depth: '0'
+      - name: Setup git user
+        run: |
+          git config --global user.name "Mateusz Woda"
+          git config --global user.email "mwoda@box.com"
       - shell: pwsh
         name: Bump version
         env:
           GithubToken: ${{ secrets.GH_TOKEN }}
-        run: .\build\bump_version.ps1 -dr $false -$gu "Mateusz Woda" -$ge "mwoda@box.com"
+        run: .\buildV2\bump_version.ps1 -dr $false -$gu "Mateusz Woda" -$ge "mwoda@box.com"
