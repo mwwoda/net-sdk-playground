@@ -52,21 +52,21 @@ if($GithubEmail -eq $null -Or $GithubEmail -eq ''){
 }
 
 ###########################################################################
-# Install dependencies
-###########################################################################
-
-if ($InstallDependencies){
-    npm install -g standard-version
-    Install-Module -Name PowerShellForGitHub -Scope CurrentUser -Force
-}
-
-###########################################################################
 # Ensure git tree is clean
 ###########################################################################
 
 Invoke-Expression "& `"$GIT_SCRIPT`" -b $Branch"
 if ($LASTEXITCODE -ne 0) {
    exit 1
+}
+
+###########################################################################
+# Install dependencies
+###########################################################################
+
+if ($InstallDependencies){
+    npm install -g standard-version
+    Install-Module -Name PowerShellForGitHub -Scope CurrentUser -Force
 }
 
 ###########################################################################

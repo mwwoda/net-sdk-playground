@@ -78,14 +78,6 @@ if($PfxPassword -eq $null -Or $PfxPassword -eq ''){
 }
 
 ###########################################################################
-# Install dependencies
-###########################################################################
-
-if ($InstallDependencies){
-    Install-Module -Name PowerShellForGitHub -Scope CurrentUser -Force
-}
-
-###########################################################################
 # Ensure git tree is clean
 ###########################################################################
 
