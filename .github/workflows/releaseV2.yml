@@ -1,0 +1,111 @@
+name: ReleaseV2
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  draft-release:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with: 
+          fetch-depth: '0'
+      - name: Setup git user
+        run: |
+          git config --global user.name "Mateusz Woda"
+          git config --global user.email "mwoda@box.com"
+      - shell: pwsh
+        name: Create Github draft release
+        env:
+          GithubToken: ${{ secrets.GH_TOKEN }}
+        run: .\buildV2\draft_release.ps1 -dr $false
+
+  framework:
+    needs: 
+      - draft-release
+    runs-on: windows-latest
+    if: startsWith(github.event.head_commit.message , format('chore{0} release v', ':'))
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with: 
+          fetch-depth: '0'
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.1
+      - name: Setup Nuget
+        uses: Nuget/setup-nuget@v1.0.5
+      - name: Setup git user
+        run: |
+          git config --global user.name "Mateusz Woda"
+          git config --global user.email "mwoda@box.com"
+      - shell: pwsh
+        name: Publish framework package
+        env:
+          NugetKey: ${{ secrets.NUGET_KEY }}
+          PfxAsBase64: ${{ secrets.PFX_KEY_BASE64 }}
+          PfxPassword: ${{ secrets.PFX_PASSWORD }}
+          GithubToken: ${{ secrets.GH_TOKEN }}
+        run: .\buildV2\publish_framework_package.ps1 -dr $false
+
+  core:
+    needs: 
+      - draft-release
+    runs-on: windows-latest
+    if: startsWith(github.event.head_commit.message , format('chore{0} release v', ':'))
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with: 
+          fetch-depth: '0'
+      - name: Setup git user
+        run: |
+          git config --global user.name "Mateusz Woda"
+          git config --global user.email "mwoda@box.com"
+      - shell: pwsh
+        name: Publish Core package
+        env:
+          NugetKey: ${{ secrets.NUGET_KEY }}
+          GithubToken: ${{ secrets.GH_TOKEN }}
+        run: .\buildV2\publish_core_package.ps1 -dr $false
+
+  create-release:
+    needs: 
+      - framework
+      - core
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with: 
+          fetch-depth: '0'
+      - name: Setup git user
+        run: |
+          git config --global user.name "Mateusz Woda"
+          git config --global user.email "mwoda@box.com"
+      - uses: actions/download-artifact@v2
+        with:
+          name: FrameworkNupkg
+          path: ${{ github.workspace }}\Net.Sdk.Playground
+      - uses: actions/download-artifact@v2
+        with:
+          name: FrameworkPdb
+          path: ${{ github.workspace }}\Net.Sdk.Playground\bin\Release
+      - uses: actions/download-artifact@v2
+        with:
+          name: CoreNupkg
+          path: ${{ github.workspace }}\Net.Sdk.Playground.Core\bin\Release
+      - uses: actions/download-artifact@v2
+        with:
+          name: CorePdb
+          path: ${{ github.workspace }}\Net.Sdk.Playground.Core\bin\Release\netstandard2.0
+      - shell: pwsh
+        name: Update Github release
+        env:
+          GithubToken: ${{ secrets.GH_TOKEN }}
+        run: .\buildV2\release.ps1 -dr $false
