@@ -46,7 +46,7 @@ if ($InstallDependencies){
 }
 
 ###########################################################################
-# Create git release
+# Publish git release
 ###########################################################################
 
 if($DryRun){
@@ -58,6 +58,11 @@ if($DryRun){
 
     $releases = Get-GitHubRelease -OwnerName $REPO_OWNER -RepositoryName $REPO_NAME
     $release = ($releases | Where-Object { $_.Name -eq $NextVersionTag })
+    if($release -eq $null -Or $release -eq ''){
+        Write-Output "Release with the name " + $NextVersionTag " not found. Aborting script"
+        exit 1
+    }
+
     $releaseParams = @{
         Release = $release."ID"
         OwnerName = $REPO_OWNER

@@ -28,6 +28,13 @@ Param
     [bool]$InstallDependencies = $true
 )
 
+function RemoveSensitiveData()
+{
+    Remove-Item $PFX_PATH
+    certutil -csp "Microsoft Strong Cryptographic Provider" -key | Select-String -Pattern "VS_KEY" | ForEach-Object{ $_.ToString().Trim()} | ForEach-Object{ certutil -delkey -csp "Microsoft Strong Cryptographic Provider" $_}
+    Write-Output "Sensitive data removed."
+}
+
 . $PSScriptRoot\variables.ps1
 
 $ErrorActionPreference = "Stop"
@@ -112,16 +119,14 @@ if($BuildAndTest){
     nuget restore $SLN_PATH
     msbuild $FRAMEWORK_PROJ_DIR /property:Configuration=Release
     if ($LASTEXITCODE -ne 0) {
-        Remove-Item $PFX_PATH
-        certutil -csp "Microsoft Strong Cryptographic Provider" -key | Select-String -Pattern "VS_KEY" | ForEach-Object{ $_.ToString().Trim()} | ForEach-Object{ certutil -delkey -csp "Microsoft Strong Cryptographic Provider" $_}
         Write-Output "Compilation failed. Aborting script."
+        RemoveSensitiveData
         exit 1
     }
     dotnet test -f $NET_FRAMEWORK_VER --verbosity normal
     if ($LASTEXITCODE -ne 0) {
-        Remove-Item $PFX_PATH
-        certutil -csp "Microsoft Strong Cryptographic Provider" -key | Select-String -Pattern "VS_KEY" | ForEach-Object{ $_.ToString().Trim()} | ForEach-Object{ certutil -delkey -csp "Microsoft Strong Cryptographic Provider" $_}
-        Write-Output "Some of the unit test failed. Aborting script."
+        Write-Output "Some of the unit tests failed. Aborting script."
+        RemoveSensitiveData
         exit 1
     }
     dotnet clean $FRAMEWORK_PROJ_DIR
@@ -138,9 +143,8 @@ if($BuildAndTest){
 nuget restore $SLN_PATH
 nuget pack $FRAMEWORK_PROJ_DIR -Build -Prop Configuration=Release
 if ($LASTEXITCODE -ne 0) {
-    Remove-Item $PFX_PATH
-    certutil -csp "Microsoft Strong Cryptographic Provider" -key | Select-String -Pattern "VS_KEY" | ForEach-Object{ $_.ToString().Trim()} | ForEach-Object{ certutil -delkey -csp "Microsoft Strong Cryptographic Provider" $_}
     Write-Output "Package creation failed. Aborting script."
+    RemoveSensitiveData
     exit 1
 }
 
@@ -157,6 +161,11 @@ if ($DryRun) {
 
     $releases = Get-GitHubRelease -OwnerName $REPO_OWNER -RepositoryName $REPO_NAME
     $release = ($releases | Where-Object { $_.Name -eq $NextVersionTag })
+    if($release -eq $null -Or $release -eq ''){
+        Write-Output "Release with the name " + $NextVersionTag " not found. Aborting script"
+        RemoveSensitiveData
+        exit 1
+    }
 
     $release | New-GitHubReleaseAsset -Path $FRAMEWORK_NUPKG_PATH
     $release | New-GitHubReleaseAsset -Path $FRAMEWORK_PDB_PATH
@@ -175,10 +184,8 @@ if ($DryRun) {
 }
 
 ###########################################################################
-# Clean all VS_KEY_* containers
+# Remove sensitive data
 ###########################################################################
 
-Remove-Item $PFX_PATH
-certutil -csp "Microsoft Strong Cryptographic Provider" -key | Select-String -Pattern "VS_KEY" | ForEach-Object{ $_.ToString().Trim()} | ForEach-Object{ certutil -delkey -csp "Microsoft Strong Cryptographic Provider" $_}
-
+RemoveSensitiveData
 exit 0
