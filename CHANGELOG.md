@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.9.0](https://github.com/mwwoda/net-sdk-playground/compare/v1.8.0...v1.9.0) (2021-12-13)
+
+
+### **New Features and Enhancements:**
+
+* update script ([977905f](https://github.com/mwwoda/net-sdk-playground/commit/977905f27798f13613098a57e538a016c5ea1570))
+
 ## [1.8.0](https://github.com/mwwoda/net-sdk-playground/compare/v1.7.1...v1.8.0) (2021-12-13)
 
 
