@@ -99,7 +99,7 @@ if($DryRun){
     $RepoLink = "https://" + $REPO_OWNER + ":" + $GithubToken + "@github.com/" + $REPO_OWNER + "/" + $REPO_NAME + ".git"
     git remote set-url origin $RepoLink
     git config user.name $GithubUsername
-    git config user.mail $GithubEmail
+    git config user.email $GithubEmail
     git branch -D $NEXT_VERSION_TAG
     git checkout -b $NEXT_VERSION_TAG
     git commit -am $NEXT_VERSION_TAG
