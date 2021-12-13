@@ -14,7 +14,7 @@ git branch | ForEach-Object {
     }
 }
 if(!($currentBranch -eq $ReleaseBranch)){
-    Write-Output "Local branch + "$currentBranch" + is not the same as the release branch " + $ReleaseBranch + ". Aborting script"
+    Write-Output "Local branch " + $currentBranch + "is not the same as the release branch " + $ReleaseBranch + ". Aborting script"
     exit 1
 }
 $NumberOfDifferentCommits = git rev-list HEAD...origin/main --count
