@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.8.0](https://github.com/mwwoda/net-sdk-playground/compare/v1.7.1...v1.8.0) (2021-12-13)
+
+
+### **Bug Fixes:**
+
+* fix script ([e65b34f](https://github.com/mwwoda/net-sdk-playground/commit/e65b34f7af8e50af9ee45d84f1a4cce31b26d1a1))
+* fix script ([6c2a2f0](https://github.com/mwwoda/net-sdk-playground/commit/6c2a2f0ecdaa188ac6a859ac6966cc0dd852eb3d))
+* remove key ([0a4439a](https://github.com/mwwoda/net-sdk-playground/commit/0a4439ac4a6a118782ce7b1cd33b0b8a54b87a2c))
+
+
+### **New Features and Enhancements:**
+
+* add new workflow ([447e178](https://github.com/mwwoda/net-sdk-playground/commit/447e1780f264aa1985bc5c1989915e85d2538840))
+* update script ([e1caec9](https://github.com/mwwoda/net-sdk-playground/commit/e1caec93a83ef3181ced7b243bee6f7e6c3a7ee0))
+* update script ([44788e6](https://github.com/mwwoda/net-sdk-playground/commit/44788e6e9cf17d3641b6ad56535755419c69eb36))
+
 ### [1.7.1](https://github.com/mwwoda/net-sdk-playground/compare/v1.7.0...v1.7.1) (2021-12-09)
 
 
