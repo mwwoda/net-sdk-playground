@@ -28,6 +28,7 @@ if($NextVersion -eq $null -Or $NextVersion -eq ''){
 }
 
 $CORE_NUPKG_PATH="$CORE_PROJ_DIR" + "\bin\Release\" + "$CORE_ASSEMBLY_NAME" + "." + "$NextVersion" + ".nupkg"
+$CORE_SNUPKG_PATH="$CORE_PROJ_DIR" + "\bin\Release\" + "$CORE_ASSEMBLY_NAME" + "." + "$NextVersion" + ".snupkg"
 
 ###########################################################################
 # Parameters validation
@@ -90,6 +91,7 @@ if ($DryRun) {
     Write-Output "Dry run. Package will not be published."
 }else{
     dotnet nuget push $CORE_NUPKG_PATH -k $NugetKey -s $NUGET_URL
+    dotnet nuget push $CORE_SNUPKG_PATH -k $NugetKey -s $NUGET_URL
 }
 
 exit 0
