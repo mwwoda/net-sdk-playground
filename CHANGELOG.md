@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.11.0](https://github.com/mwwoda/net-sdk-playground/compare/v1.10.1...v1.11.0) (2022-01-14)
+
+
+### **New Features and Enhancements:**
+
+* add snupkg ([4fa5c84](https://github.com/mwwoda/net-sdk-playground/commit/4fa5c84b39ae05d7b597389718e07822d02965bb))
+* add source link ([3175bf1](https://github.com/mwwoda/net-sdk-playground/commit/3175bf12d902d05b39b29a4a85134e26b141c7cd))
+
 ### [1.10.1](https://github.com/mwwoda/net-sdk-playground/compare/v1.10.0...v1.10.1) (2021-12-14)
 
 
