@@ -10,7 +10,7 @@ namespace Net.Sdk.Playground
     {
         public string Bar()
         {
-            var a = "b";
+            var a = "bb";
             return "Bar";
         }
 
