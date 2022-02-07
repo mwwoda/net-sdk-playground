@@ -67,6 +67,7 @@ if ($LASTEXITCODE -ne 0) {
 if ($InstallDependencies){
     npm install -g standard-version
     Install-Module -Name PowerShellForGitHub -Scope CurrentUser -Force
+    $env:Path += ';%USERPROFILE%\AppData\Roaming\npm'
     refreshenv
 }
 
