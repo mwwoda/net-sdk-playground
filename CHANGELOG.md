@@ -2,6 +2,70 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.12.0](https://github.com/mwwoda/net-sdk-playground/compare/v1.11.0...v1.12.0) (2022-02-09)
+
+
+### **Bug Fixes:**
+
+* clean script ([061f551](https://github.com/mwwoda/net-sdk-playground/commit/061f551e7705b3f8918845d92c96680d5db673ed))
+* fix script ([f0db130](https://github.com/mwwoda/net-sdk-playground/commit/f0db1303c3fe77de24061fc1c0b5fb94ab21c0a6))
+
+
+### **New Features and Enhancements:**
+
+* add refresh env ([3b7b46f](https://github.com/mwwoda/net-sdk-playground/commit/3b7b46f977ed581983efe14595eecfaf79a50aa7))
+* add standard version to path ([fd9b59b](https://github.com/mwwoda/net-sdk-playground/commit/fd9b59be2de9460e1644ea38c898876e7cff8914))
+* new feature ([3f43f11](https://github.com/mwwoda/net-sdk-playground/commit/3f43f118d94ffe7a0820800c1ac201c52ea9239e))
+* new feature ([9c9285d](https://github.com/mwwoda/net-sdk-playground/commit/9c9285d106a7179df2714b3e8c7daf0b4d1fb558))
+
+## [1.12.0](https://github.com/mwwoda/net-sdk-playground/compare/v1.11.0...v1.12.0) (2022-02-09)
+
+
+### **Bug Fixes:**
+
+* clean script ([061f551](https://github.com/mwwoda/net-sdk-playground/commit/061f551e7705b3f8918845d92c96680d5db673ed))
+* fix script ([f0db130](https://github.com/mwwoda/net-sdk-playground/commit/f0db1303c3fe77de24061fc1c0b5fb94ab21c0a6))
+
+
+### **New Features and Enhancements:**
+
+* add refresh env ([3b7b46f](https://github.com/mwwoda/net-sdk-playground/commit/3b7b46f977ed581983efe14595eecfaf79a50aa7))
+* add standard version to path ([fd9b59b](https://github.com/mwwoda/net-sdk-playground/commit/fd9b59be2de9460e1644ea38c898876e7cff8914))
+* new feature ([3f43f11](https://github.com/mwwoda/net-sdk-playground/commit/3f43f118d94ffe7a0820800c1ac201c52ea9239e))
+* new feature ([9c9285d](https://github.com/mwwoda/net-sdk-playground/commit/9c9285d106a7179df2714b3e8c7daf0b4d1fb558))
+
+## [1.12.0](https://github.com/mwwoda/net-sdk-playground/compare/v1.11.0...v1.12.0) (2022-02-09)
+
+
+### **Bug Fixes:**
+
+* clean script ([061f551](https://github.com/mwwoda/net-sdk-playground/commit/061f551e7705b3f8918845d92c96680d5db673ed))
+* fix script ([f0db130](https://github.com/mwwoda/net-sdk-playground/commit/f0db1303c3fe77de24061fc1c0b5fb94ab21c0a6))
+
+
+### **New Features and Enhancements:**
+
+* add refresh env ([3b7b46f](https://github.com/mwwoda/net-sdk-playground/commit/3b7b46f977ed581983efe14595eecfaf79a50aa7))
+* add standard version to path ([fd9b59b](https://github.com/mwwoda/net-sdk-playground/commit/fd9b59be2de9460e1644ea38c898876e7cff8914))
+* new feature ([3f43f11](https://github.com/mwwoda/net-sdk-playground/commit/3f43f118d94ffe7a0820800c1ac201c52ea9239e))
+* new feature ([9c9285d](https://github.com/mwwoda/net-sdk-playground/commit/9c9285d106a7179df2714b3e8c7daf0b4d1fb558))
+
+## [1.12.0](https://github.com/mwwoda/net-sdk-playground/compare/v1.11.0...v1.12.0) (2022-02-08)
+
+
+### **Bug Fixes:**
+
+* clean script ([061f551](https://github.com/mwwoda/net-sdk-playground/commit/061f551e7705b3f8918845d92c96680d5db673ed))
+* fix script ([f0db130](https://github.com/mwwoda/net-sdk-playground/commit/f0db1303c3fe77de24061fc1c0b5fb94ab21c0a6))
+
+
+### **New Features and Enhancements:**
+
+* add refresh env ([3b7b46f](https://github.com/mwwoda/net-sdk-playground/commit/3b7b46f977ed581983efe14595eecfaf79a50aa7))
+* add standard version to path ([fd9b59b](https://github.com/mwwoda/net-sdk-playground/commit/fd9b59be2de9460e1644ea38c898876e7cff8914))
+* new feature ([3f43f11](https://github.com/mwwoda/net-sdk-playground/commit/3f43f118d94ffe7a0820800c1ac201c52ea9239e))
+* new feature ([9c9285d](https://github.com/mwwoda/net-sdk-playground/commit/9c9285d106a7179df2714b3e8c7daf0b4d1fb558))
+
 ## [1.12.0](https://github.com/mwwoda/net-sdk-playground/compare/v1.11.0...v1.12.0) (2022-02-08)
 
 
