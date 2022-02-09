@@ -128,7 +128,8 @@ if($DryRun){
 
     git checkout $lastBranch
     git branch -D $NEXT_VERSION_TAG
-    git pull origin $lastBranch
+    git fetch origin $lastBranch
+    git reset --hard FETCH_HEAD
 }
 
 exit 0
