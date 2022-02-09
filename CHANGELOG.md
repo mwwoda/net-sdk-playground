@@ -7,6 +7,23 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### **Bug Fixes:**
 
+* fix script ([cfd5f1b](https://github.com/mwwoda/net-sdk-playground/commit/cfd5f1bd4bc6c9b486d6733ee0f5e54f4a635744))
+* fix script ([d723e84](https://github.com/mwwoda/net-sdk-playground/commit/d723e8409476e2a0d61d7b798bc511e5f836c552))
+* fix script ([7eea8fb](https://github.com/mwwoda/net-sdk-playground/commit/7eea8fbb9cd99a29d5f2528f3e8df50a77be3e57))
+
+
+### **New Features and Enhancements:**
+
+* change ordering ([b4a68f8](https://github.com/mwwoda/net-sdk-playground/commit/b4a68f8d72e2ba8f95e44139ca2d50ce71e7914c))
+* new feature ([f01485e](https://github.com/mwwoda/net-sdk-playground/commit/f01485eb15bd515273972ab95690d8761218ba1f))
+* new feature ([8835017](https://github.com/mwwoda/net-sdk-playground/commit/88350177d2b03e9964ad6aea5cb01a1563fb872d))
+* new feature ([52d4b0e](https://github.com/mwwoda/net-sdk-playground/commit/52d4b0ef54b05038c85163f68a680e5632fb7c50))
+
+## [1.16.0](https://github.com/mwwoda/net-sdk-playground/compare/v1.15.0...v1.16.0) (2022-02-09)
+
+
+### **Bug Fixes:**
+
 * fix script ([d723e84](https://github.com/mwwoda/net-sdk-playground/commit/d723e8409476e2a0d61d7b798bc511e5f836c552))
 * fix script ([7eea8fb](https://github.com/mwwoda/net-sdk-playground/commit/7eea8fbb9cd99a29d5f2528f3e8df50a77be3e57))
 
