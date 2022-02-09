@@ -127,8 +127,8 @@ if($DryRun){
     Clear-GitHubAuthentication
 
     git checkout $lastBranch
-    git pull
     git branch -D $NEXT_VERSION_TAG
+    git pull
 }
 
 exit 0
