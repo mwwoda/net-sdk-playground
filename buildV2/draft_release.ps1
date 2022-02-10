@@ -20,6 +20,16 @@ $ErrorActionPreference = "Stop"
 
 . $PSScriptRoot\variables.ps1
 
+###########################################################################
+# Pull latest after release PR
+###########################################################################
+
+git pull
+
+###########################################################################
+# Set variables
+###########################################################################
+
 if($NextVersion -eq $null -Or $NextVersion -eq ''){
     $NextVersion = $env:NextVersion
     if($NextVersion -eq $null -Or $NextVersion -eq ''){
@@ -41,12 +51,6 @@ if($GithubToken -eq $null -Or $GithubToken -eq ''){
         exit 1
     }
 }
-
-###########################################################################
-# Pull latest after release PR
-###########################################################################
-
-git pull
 
 ###########################################################################
 # Ensure git tree is clean
