@@ -104,7 +104,15 @@ if($DryRun){
         Body = $ReleaseNotes
         Draft = $true
     }
-    $release = New-GitHubRelease @releaseParams
+    $newRelease = New-GitHubRelease @releaseParams
+
+    $NextVersionTag = "v" + $NextVersion
+    $releases = Get-GitHubRelease -OwnerName $REPO_OWNER -RepositoryName $REPO_NAME
+    $release = ($releases | Where-Object { $_.Name -eq $NextVersionTag })
+    if($release -eq $null -Or $release -eq ''){
+        Write-Output "Release with the name " + $NextVersionTag " not found. Aborting script"
+        exit 1
+    }
 
     Clear-GitHubAuthentication
 }
