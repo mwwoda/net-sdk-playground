@@ -86,6 +86,7 @@ $RELEASE_NOTE_LINK = $NEXT_VERSION.Replace(".", "") + "-" + "$RELEASE_DATE"
 ###########################################################################
 
 $sections = @()
+$sections += ('### ⚠ BREAKING CHANGES')
 foreach($line in Get-Content $VERSIONRC_PATH) {
     $found = $line -match '(?<=section": ").*(?=",)'
     if ($found) {
@@ -98,9 +99,11 @@ $currentSection = $null
 $previousSectionIndex = 0
 
 foreach($line in Get-Content $CHANGELOG_PATH) {
-    if($line -match "## [[0-9]+\.[0-9]+\.[0-9]+]"){
+    if($line -match "#{2,3} [[0-9]+\.[0-9]+\.[0-9]+]"){
         if($VersionFound){
-            $orderedSections[$previousSectionIndex] = $currentSection
+            if(![string]::IsNullOrWhiteSpace($currentSection)){
+                $orderedSections[$previousSectionIndex] = $currentSection
+            }
             break
         }
         $VersionFound = $true
@@ -110,7 +113,9 @@ foreach($line in Get-Content $CHANGELOG_PATH) {
         for ($i=0; $i -lt $sections.Length; $i++)
         {
             if($line -match [Regex]::Escape($sections[$i])){
-                $orderedSections[$previousSectionIndex] = $currentSection
+                if(![string]::IsNullOrWhiteSpace($currentSection)){
+                    $orderedSections[$previousSectionIndex] = $currentSection
+                }
                 $previousSectionIndex = $i
                 $currentSection = $null
                 continue
@@ -127,7 +132,7 @@ foreach($orderedSection in $orderedSections){
 }
 
 $fileContent = Get-Content $CHANGELOG_PATH -Raw
-$result = [regex]::match($fileContent, '(?s)(###.*?)## [[0-9]+\.[0-9]+\.[0-9]+]').Groups[1].Value
+$result = [regex]::match($fileContent, '(?s)(###.*?)#{2,3} [[0-9]+\.[0-9]+\.[0-9]+]').Groups[1].Value
 $fileContent -replace [Regex]::Escape($result), $orderedSectionsAsString | Set-Content $CHANGELOG_PATH
 
 ###########################################################################
@@ -177,6 +182,7 @@ if($DryRun){
 
     git checkout $lastBranch
     git branch -D $NEXT_VERSION_TAG
+
 }
 
 exit 0
