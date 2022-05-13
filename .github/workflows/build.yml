@@ -1,32 +1,50 @@
 name: Build and Test
 
-on: [pull_request]
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, synchronize]
+    branches:
+      - main
 
 jobs:
   framework:
-    runs-on: windows-latest
+    name: Build and Test - Framework
+    runs-on: windows-2019
 
     steps:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Add msbuild to PATH
         uses: microsoft/setup-msbuild@v1.1
-      - name: Download PfxTool
-        run: Invoke-WebRequest https://github.com/honzajscz/SnInstallPfx/releases/download/0.1.2-beta/SnInstallPfx.exe -OutFile SnInstallPfx.exe
-      - name: Install Pfx in container
-        run: .\SnInstallPfx.exe ./Net.Sdk.Playground/PlaygroundSDKKey.pfx fess
+      - name: Setup Nuget
+        uses: Nuget/setup-nuget@v1.0.5
+      - name: Restore
+        run: nuget restore
       - name: Build
-        run: msbuild ./Net.Sdk.Playground /property:Configuration=Release
+        run: msbuild .\Net.Sdk.Playground
       - name: Test
-        run: dotnet test -f net45 --verbosity normal
+        run: dotnet test .\Net.Sdk.Playground.Test -f net45
 
   core:
+    strategy:
+      matrix:
+        include:
+          - net-version: 2.0.0
+            net-runtime: netcoreapp2.0
+    name: Build and Test - Core
     runs-on: windows-latest
 
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '${{ matrix.net-version }}'
       - name: Build
-        run: dotnet build ./Net.Sdk.Playground.Core --configuration Release
+        run: dotnet build .\Net.Sdk.Playground.Core
       - name: Test
-        run: dotnet test -f netcoreapp2.0 --no-restore --verbosity normal
+        run: dotnet test .\Net.Sdk.Playground.Test -f ${{ matrix.net-runtime }}
