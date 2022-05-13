@@ -16,7 +16,7 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
-  <ItemGroup Condition="$(TargetFramework.StartsWith('netcore')) or $(TargetFramework.StartsWith('net5.0'))">
+  <ItemGroup Condition="$(TargetFramework.StartsWith('netcore')) or $(TargetFramework.StartsWith('net5.0')) or $(TargetFramework.StartsWith('net6.0'))">
           <ProjectReference Include="..\Net.Sdk.Playground.Core\Net.Sdk.Playground.Core.csproj" />
       <PackageReference Include="Moq">
           <Version>4.7.0</Version>
