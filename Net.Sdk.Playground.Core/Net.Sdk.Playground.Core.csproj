@@ -3,14 +3,14 @@
   <PropertyGroup>
     <Description>.NET SDK Playground for .NET Core</Description>
     <AssemblyTitle>Net.Sdk.Playground.Core</AssemblyTitle>
-    <Version>1.19.0</Version>
+    <Version>2.1.0</Version>
     <Authors>mwoda</Authors>
 	<Owners>mwoda</Owners>
 	<PackageProjectUrl>https://github.com/mwwoda/net-sdk-playground</PackageProjectUrl>
   <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
 	<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
 	<PackageDescription>.NET SDK Playground for testing purposes. The library is built for .NET Core.</PackageDescription>
-	<PackageReleaseNotes>See https://github.com/mwwoda/net-sdk-playground/blob/main/CHANGELOG.md#1190-2022-02-10</PackageReleaseNotes>
+	<PackageReleaseNotes>See https://github.com/mwwoda/net-sdk-playground/blob/main/CHANGELOG.md#210-2022-05-13</PackageReleaseNotes>
 	<Copyright>Copyright 2021</Copyright>
 	<PackageTags>.NET;SDK;Core</PackageTags>
     <TargetFramework>netstandard2.0</TargetFramework>
