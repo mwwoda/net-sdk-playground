@@ -29,11 +29,6 @@ jobs:
         run: dotnet test .\Net.Sdk.Playground.Test -f net45
 
   core:
-    strategy:
-      matrix:
-        include:
-          - net-version: 2.0.0
-            net-runtime: netcoreapp2.0
     name: Build and Test - Core
     runs-on: windows-latest
 
@@ -43,8 +38,8 @@ jobs:
       - name: Setup dotnet
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: '${{ matrix.net-version }}'
+          dotnet-version: '2.0.0'
       - name: Build
         run: dotnet build .\Net.Sdk.Playground.Core
       - name: Test
-        run: dotnet test .\Net.Sdk.Playground.Test -f ${{ matrix.net-runtime }}
+        run: dotnet test .\Net.Sdk.Playground.Test -f netcoreapp2.0
