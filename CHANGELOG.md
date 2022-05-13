@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.1.0](https://github.com/mwwoda/net-sdk-playground/compare/v2.0.0...v2.1.0) (2022-05-13)
+
+
+### **New Features and Enhancements:**
+
+* ci changes ([58c0690](https://github.com/mwwoda/net-sdk-playground/commit/58c0690bf3fbaaa614ff235976c4c168bf7e7499))
+
+### **Bug Fixes:**
+
+* fix script ([b4cf3ae](https://github.com/mwwoda/net-sdk-playground/commit/b4cf3aee8f981a7a0771a71d24c9011035c107be))
+
+
 ## [1.19.0](https://github.com/mwwoda/net-sdk-playground/compare/v1.18.0...v1.19.0) (2022-02-10)
 
 
@@ -332,3 +344,4 @@ All notable changes to this project will be documented in this file. See [standa
 
 * fix some stuff ([5c0b3ac](https://github.com/mwwoda/net-sdk-playground/commit/5c0b3ac8f263fa41031d5c9defb4f27b6e22203e))
 * fix some stuff 2 ([5857db8](https://github.com/mwwoda/net-sdk-playground/commit/5857db8ac2089c94e1bd354df636c592a1ecd2e3))
+
