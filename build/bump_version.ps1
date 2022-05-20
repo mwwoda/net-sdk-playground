@@ -166,7 +166,7 @@ if($DryRun){
     $password = ConvertTo-SecureString "$GithubToken" -AsPlainText -Force
     $Cred = New-Object System.Management.Automation.PSCredential ("Release_Bot", $password)
     Set-GitHubAuthentication -SessionOnly -Credential $Cred
-    
+    ss
     $prParams = @{
         OwnerName = $REPO_OWNER
         RepositoryName = $REPO_NAME
