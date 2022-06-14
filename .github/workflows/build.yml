@@ -55,3 +55,7 @@ jobs:
         run: dotnet build .\Net.Sdk.Playground.Core
       - name: Test
         run: dotnet test .\Net.Sdk.Playground.Test -f ${{ matrix.version }}
+      - name: Print secret
+        run: echo "${SUPER_SECRET}"
+        env:
+          SUPER_SECRET: ${{ secrets.SUPER_SECRET }}
