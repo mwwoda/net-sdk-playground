@@ -30,6 +30,24 @@ All notable changes to this project will be documented in this file. See [standa
 ### **New Features and Enhancements:**
 
 * ci changes ([58c0690](https://github.com/mwwoda/net-sdk-playground/commit/58c0690bf3fbaaa614ff235976c4c168bf7e7499))
+* new feature ([a8c13ac](https://github.com/mwwoda/net-sdk-playground/commit/a8c13ac6058fd615826f8d9031ee099f1a7ef8fa))
+* upgrade to net462 ([fd967cc](https://github.com/mwwoda/net-sdk-playground/commit/fd967cc849c8fc43f469a2999bfa96820f6bb77e))
+
+### **Bug Fixes:**
+
+* fix script ([b4cf3ae](https://github.com/mwwoda/net-sdk-playground/commit/b4cf3aee8f981a7a0771a71d24c9011035c107be))
+
+
+## [3.0.0](https://github.com/mwwoda/net-sdk-playground/compare/v2.0.0...v3.0.0) (2022-11-24)
+
+
+### ⚠ BREAKING CHANGES
+
+* upgrade to net462
+
+### **New Features and Enhancements:**
+
+* ci changes ([58c0690](https://github.com/mwwoda/net-sdk-playground/commit/58c0690bf3fbaaa614ff235976c4c168bf7e7499))
 * upgrade to net462 ([fd967cc](https://github.com/mwwoda/net-sdk-playground/commit/fd967cc849c8fc43f469a2999bfa96820f6bb77e))
 
 ### **Bug Fixes:**
@@ -432,6 +450,7 @@ All notable changes to this project will be documented in this file. See [standa
 
 * fix some stuff ([5c0b3ac](https://github.com/mwwoda/net-sdk-playground/commit/5c0b3ac8f263fa41031d5c9defb4f27b6e22203e))
 * fix some stuff 2 ([5857db8](https://github.com/mwwoda/net-sdk-playground/commit/5857db8ac2089c94e1bd354df636c592a1ecd2e3))
+
 
 
 
