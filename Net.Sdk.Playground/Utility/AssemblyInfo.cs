@@ -5,7 +5,7 @@ namespace Net.Sdk.Playground.Utility
         public const string AssemblyTitle = "Net.Sdk.Playground";
         public const string AssemblyProduct = "Net.Sdk.Playground";
 
-        public const string NuGetVersion = "2.1.0";
+        public const string NuGetVersion = "3.0.0";
         public const string AssemblyVersion = "1.0.0.0";
         public const string AssemblyFileVersion = "1.0.0.0";
     }
